@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name" translatable="false">Quizer</string>
+    <string name="correct_text" translatable="false">Correct!</string>
+    <string name="incorrect_text" translatable="false">Incorrect!</string>
+    <string name="result">You have %d correct answers!</string>
+    <string name="bad_result">You have no correct answers, try again!</string>
+    <string name="buy_btn_text">Buy</string>
+    <string name="title_activity_quiz_pager">QuizPagerActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="about_btn">About</string>
+    <string name="starDescription">Star</string>
+    <string name="result_dialog_title">Results</string>
+    <string name="ok_btn">OK</string>
+    <string name="dialog_rating_question">How much do you like this test?</string>
+    <string name="about_menu_item">About</string>
+    <string name="buy_notice">You should buy this quiz first</string>
+</resources>
