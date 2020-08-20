@@ -26,8 +26,4 @@ public class QuizActivity extends SingleFragmentActivity {
         return intent;
     }
 
-    /*@Override
-    public void onBackPressed() {
-        Intent intent = new Intent(,ListFragmentActivity.class,)
-    }*/
 }

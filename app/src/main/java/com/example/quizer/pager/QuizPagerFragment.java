@@ -12,7 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.quizer.model.Quiz;
-import com.example.quizer.model.QuizLab;
+import com.example.quizer.database.QuizLab;
 import com.example.quizer.R;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class QuizPagerFragment extends Fragment {
 
         private List<Quiz> quizList;
 
-        public PagerAdapter(Fragment fragment) {
+        public PagerAdapter(Fragment fragment){
             super(fragment);
             quizList = QuizLab.getInstance(getActivity()).getQuizList();
         }

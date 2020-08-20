@@ -11,8 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.quizer.model.Quiz;
-import com.example.quizer.model.QuizLab;
+import com.example.quizer.database.QuizLab;
 import com.example.quizer.R;
+
+import java.sql.SQLException;
 
 
 public class QuizAboutFragment extends Fragment {
@@ -31,15 +33,18 @@ public class QuizAboutFragment extends Fragment {
         titleTextView = v.findViewById(R.id.quiz_title_text);
         isSolvedTextView = v.findViewById(R.id.is_solved_text);
         questionNumberTextView = v.findViewById(R.id.question_number_text);
-            String title =  getArguments().getString(QUIZ_TITLE);
-            Quiz quiz = QuizLab.getInstance(getActivity()).getQuiz(title);
-            titleTextView.setText(quiz.getTitle());
-            if (quiz.isSolved())
-                isSolvedTextView.setText("Quiz is solved");
-            else
-                isSolvedTextView.setText("Quiz isn't solved!");
+        String title = getArguments().getString(QUIZ_TITLE);
+        Quiz quiz = null;
 
-            questionNumberTextView.setText("Quiz has" + quiz.getQuestionList().size() + " questions");
+        quiz = QuizLab.getInstance(getActivity()).getQuiz(title);
+
+        titleTextView.setText(quiz.getTitle());
+        if (quiz.isSolved())
+            isSolvedTextView.setText("Quiz is solved");
+        else
+            isSolvedTextView.setText("Quiz isn't solved!");
+
+        // questionNumberTextView.setText("Quiz has" + quiz.getQuestions().size() + " questions");
         return v;
     }
 
