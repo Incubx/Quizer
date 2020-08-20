@@ -1,26 +1,65 @@
 package com.example.quizer.model;
 
-public class Question {
-    private int questionResId;
-    private int rightAnswer;
-    private int[] answersResIds;
+import androidx.annotation.NonNull;
 
-    public Question(int questionResId, int rightAnswer, int[] answersResids) {
-        this.questionResId = questionResId;
-        this.rightAnswer = rightAnswer;
-        this.answersResIds = answersResids;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "Questions")
+public class Question {
+    @DatabaseField(columnName = "id", generatedId = true)
+    @SuppressWarnings("unused")
+    private int id;
+    @DatabaseField(columnName = "text",unique = true)
+    private String questionText;
+    @DatabaseField(columnName = "rightAnswer")
+    private int rightAnswer;
+    @DatabaseField(foreign = true,columnName = "quiz")
+    private Quiz quiz;
+
+
+
+@SuppressWarnings("unused")
+    public Question() {
+//For ORMLite
     }
 
-    public int getQuestionResId() {
-        return questionResId;
+    public Question(String questionText, int rightAnswer, Quiz quiz) {
+        this.questionText = questionText;
+        this.rightAnswer = rightAnswer;
+        this.quiz = quiz;
+
+    }
+
+    public Question(String questionText, int rightAnswer) {
+        this.questionText = questionText;
+        this.rightAnswer = rightAnswer;
+    }
+
+    public String getQuestionText() {
+        return questionText;
     }
 
     public int getRightAnswer() {
         return rightAnswer;
     }
 
-    public int[] getAnswersResIds() {
-        return answersResIds;
+    public Quiz getQuiz() {
+        return quiz;
     }
 
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", question='" + questionText + '\'' +
+                ", rightAnswer=" + rightAnswer +
+                ", quiz=" + quiz +
+                '}';
+    }
 }
