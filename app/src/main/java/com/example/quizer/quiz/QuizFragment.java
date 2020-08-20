@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.quizer.R;
@@ -151,7 +152,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         QuizLab.getInstance(getActivity()).updateQuiz(quiz);
         Toast.makeText(getActivity(), quiz.isSolved() + quiz.getTitle(), Toast.LENGTH_LONG).show();
         String finalText = setFinalText();
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getParentFragmentManager();
         ResultDialogFragment resultAlert = ResultDialogFragment.newInstance(finalText);
         resultAlert.setTargetFragment(QuizFragment.this, REQUEST_RATING);
         resultAlert.show(fm, "result_dialog");

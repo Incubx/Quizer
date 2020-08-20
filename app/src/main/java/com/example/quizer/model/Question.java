@@ -31,10 +31,6 @@ public class Question {
 
     }
 
-    public Question(String questionText, int rightAnswer) {
-        this.questionText = questionText;
-        this.rightAnswer = rightAnswer;
-    }
 
     public String getQuestionText() {
         return questionText;
