@@ -11,10 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.quizer.model.Quiz;
-import com.example.quizer.database.QuizLab;
+import com.example.quizer.database.Repository;
 import com.example.quizer.R;
-
-import java.sql.SQLException;
 
 
 public class QuizAboutFragment extends Fragment {
@@ -36,7 +34,7 @@ public class QuizAboutFragment extends Fragment {
         String title = getArguments().getString(QUIZ_TITLE);
         Quiz quiz = null;
 
-        quiz = QuizLab.getInstance(getActivity()).getQuiz(title);
+        quiz = Repository.getInstance(getActivity()).getQuiz(title);
 
         titleTextView.setText(quiz.getTitle());
         if (quiz.isSolved())

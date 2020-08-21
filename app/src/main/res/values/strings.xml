@@ -6,6 +6,7 @@
     <string name="bad_result">You have no correct answers, try again!</string>
     <string name="buy_btn_text">Buy</string>
     <string name="title_activity_quiz_pager">QuizPagerActivity</string>
+    <string name="share_text">Hey! I\'ve completed quiz "%s" with %d correct answers!</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -28,4 +29,5 @@
     <string name="dialog_rating_question">How much do you like this test?</string>
     <string name="about_menu_item">About</string>
     <string name="buy_notice">You should buy this quiz first</string>
+    <string name="share_btn">Share</string>
 </resources>

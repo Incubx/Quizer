@@ -6,6 +6,17 @@
     android:layout_height="wrap_content"
     tools:context=".quiz.ResultDialogFragment">
 
+    <Button
+        android:id="@+id/share_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/share_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
     <TextView
         android:id="@+id/result_text"
         android:layout_width="wrap_content"

@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.quizer.pager.QuizPagerActivity;
 import com.example.quizer.model.Quiz;
 import com.example.quizer.quiz.QuizActivity;
-import com.example.quizer.database.QuizLab;
+import com.example.quizer.database.Repository;
 import com.example.quizer.R;
 
 
@@ -75,8 +75,8 @@ public class QuizListFragment extends Fragment {
     }
 
     private void updateUI() {
-        QuizLab quizLab = QuizLab.getInstance(getActivity());
-        List<Quiz> quizList = quizLab.getQuizList();
+        Repository repository = Repository.getInstance(getActivity());
+        List<Quiz> quizList = repository.getQuizList();
         if (adapter == null) {
             adapter = new QuizAdapter(quizList);
             recyclerView.setAdapter(adapter);
@@ -96,7 +96,7 @@ public class QuizListFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     quiz.setFree(true);
-                    QuizLab.getInstance(getActivity()).updateQuiz(quiz);
+                    Repository.getInstance(getActivity()).updateQuiz(quiz);
                     Toast.makeText(getActivity(), "Thanks for buying this quiz!", Toast.LENGTH_LONG).show();
                     updateUI();
                 }

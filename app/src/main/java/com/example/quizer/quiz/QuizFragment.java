@@ -13,14 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.quizer.R;
 import com.example.quizer.model.Answer;
 import com.example.quizer.model.Question;
 import com.example.quizer.model.Quiz;
-import com.example.quizer.database.QuizLab;
+import com.example.quizer.database.Repository;
 import com.example.quizer.recyclerView.ListFragmentActivity;
 
 import java.util.ArrayList;
@@ -78,8 +77,8 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         //Get Quiz title from fragment's arguments.
         if (getArguments() != null) {
             String quizTitle = getArguments().getString(TITLE_ARG);
-            quiz = QuizLab.getInstance(getActivity()).getQuiz(quizTitle);
-            questions = QuizLab.getInstance(getActivity()).getQuestionsByQuiz(quiz);
+            quiz = Repository.getInstance(getActivity()).getQuiz(quizTitle);
+            questions = Repository.getInstance(getActivity()).getQuestionsByQuiz(quiz);
             setCurrentQuestion();
         }
         return v;
@@ -116,7 +115,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         currentQuestion = questions.get(questionIndex);
         //Получаем ответы и устанавливаем текст на кнопках
         questionTextView.setText(currentQuestion.getQuestionText());
-        List<Answer> answers = QuizLab.getInstance(getActivity()).getAnswerByQuestion(currentQuestion);
+        List<Answer> answers = Repository.getInstance(getActivity()).getAnswerByQuestion(currentQuestion);
         for (int i = 0; i < 4; i++) {
             if (answers.size() > i)
                 btnList.get(i).setText(answers.get(i).getAnswerText());
@@ -149,7 +148,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
 
     private void finishQuiz() {
         quiz.setSolved(true);
-        QuizLab.getInstance(getActivity()).updateQuiz(quiz);
+        Repository.getInstance(getActivity()).updateQuiz(quiz);
         Toast.makeText(getActivity(), quiz.isSolved() + quiz.getTitle(), Toast.LENGTH_LONG).show();
         String finalText = setFinalText();
         FragmentManager fm = getParentFragmentManager();

@@ -12,7 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.quizer.model.Quiz;
-import com.example.quizer.database.QuizLab;
+import com.example.quizer.database.Repository;
 import com.example.quizer.R;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class QuizPagerFragment extends Fragment {
         quizPager = v.findViewById(R.id.quiz_pager);
         quizPager.setAdapter(new PagerAdapter(this));
 
-        List<Quiz> quizList = QuizLab.getInstance(getActivity()).getQuizList();
+        List<Quiz> quizList = Repository.getInstance(getActivity()).getQuizList();
         String title = getArguments().getString(TITLE_ARG);
         for (int i = 0; i < quizList.size(); i++) {
             if (quizList.get(i).getTitle().equals(title)) {
@@ -56,7 +56,7 @@ public class QuizPagerFragment extends Fragment {
 
         public PagerAdapter(Fragment fragment){
             super(fragment);
-            quizList = QuizLab.getInstance(getActivity()).getQuizList();
+            quizList = Repository.getInstance(getActivity()).getQuizList();
         }
 
 
