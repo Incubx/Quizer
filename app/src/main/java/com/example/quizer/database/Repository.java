@@ -4,11 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 
-import com.example.quizer.model.Answer;
-import com.example.quizer.model.Question;
-import com.example.quizer.model.QuestionAnswer;
-import com.example.quizer.model.Quiz;
+import com.example.quizer.quizModel.Answer;
+import com.example.quizer.quizModel.Question;
+import com.example.quizer.quizModel.QuestionAnswer;
+import com.example.quizer.quizModel.Quiz;
+import com.example.quizer.userCabinet.User;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class Repository {
     private final QuestionDAO questionDAO;
     private final AnswerDAO answerDAO;
     private final QuestionAnswerDAO questionAnswerDAO;
+    private final UserDAO userDAO;
 
 
     public static Repository getInstance(Context context) {
@@ -44,6 +47,7 @@ public class Repository {
         questionDAO = helper.getQuestionDAO();
         answerDAO = helper.getAnswerDAO();
         questionAnswerDAO = helper.getQuestionAnswerDAO();
+        userDAO = helper.getUserDAO();
 
 
         if (quizDAO.getQuizList().size() == 0) {
@@ -103,19 +107,13 @@ public class Repository {
     }
 
     public void initDatabase() throws SQLException {
+
+
         //Filling database with some data
-       Quiz quiz = createQuiz("First Quiz", 5, false, false);
-       // Quiz quiz = new Quiz("First Quiz", 5, false, false);
+        Quiz quiz = createQuiz("First Quiz", 5, false, false);
 
-
-        Question question1 =  createQuestion("Capital of Russia", 0, quiz);
-        Question question2 =  createQuestion("Capital of USA", 1, quiz);
-       // quizDAO.create(quiz);
-        //questionDAO.create(question1);
-        //questionDAO.create(question2);
-        //quiz.addQuestion(question1);
-       // quiz.addQuestion(question2);
-       // quizDAO.update(quiz);
+        Question question1 = createQuestion("Capital of Russia", 0, quiz);
+        Question question2 = createQuestion("Capital of USA", 1, quiz);
 
         Answer answer1 = createAnswer("Moscow");
         Answer answer2 = createAnswer("London");
@@ -123,40 +121,22 @@ public class Repository {
         Answer answer4 = createAnswer("Washington");
         Answer answer5 = createAnswer("Krasnodar");
 
-        /*answerDAO.create(answer1);
-        answerDAO.create(answer2);
-        answerDAO.create(answer3);
-        answerDAO.create(answer4);
-        answerDAO.create(answer5);*/
+        setAnswersForQuestion(question1, answer1, answer2, answer3, answer4);
+        setAnswersForQuestion(question2, answer1, answer4, answer5, answer2);
 
-        setAnswersForQuestion(question1,answer1,answer2,answer3,answer4);
-        setAnswersForQuestion(question2,answer1,answer4,answer5,answer2);
+        User user = new User("Pixel",0);
+        addUser(user);
 
-        /*QuestionAnswer question1Answer1 = new QuestionAnswer(question1, answer1);
-        QuestionAnswer question1Answer2 = new QuestionAnswer(question1, answer2);
-        QuestionAnswer question1Answer3 = new QuestionAnswer(question1, answer3);
-        QuestionAnswer question1Answer4 = new QuestionAnswer(question1, answer4);
-        questionAnswerDAO.create(question1Answer1);
-        questionAnswerDAO.create(question1Answer2);
-        questionAnswerDAO.create(question1Answer3);
-        questionAnswerDAO.create(question1Answer4);
 
-        QuestionAnswer question2Answer1 = new QuestionAnswer(question2, answer1);
-        QuestionAnswer question2Answer2 = new QuestionAnswer(question2, answer4);
-        QuestionAnswer question2Answer3 = new QuestionAnswer(question2, answer5);
-        QuestionAnswer question2Answer4 = new QuestionAnswer(question2, answer3);
-        questionAnswerDAO.create(question2Answer1);
-        questionAnswerDAO.create(question2Answer2);
-        questionAnswerDAO.create(question2Answer3);
-        questionAnswerDAO.create(question2Answer4);*/
     }
 
-    public Quiz createQuiz(String title,int size,boolean isSolved, boolean isFree) throws SQLException {
-        Quiz quiz = new Quiz(title, size, isSolved,isFree);
+    public Quiz createQuiz(String title, int size, boolean isSolved, boolean isFree) throws SQLException {
+        Quiz quiz = new Quiz(title, size, isSolved, isFree);
         quizDAO.create(quiz);
         return quiz;
     }
-    public Question createQuestion(String questionText,int rightAnswer,Quiz quiz) throws SQLException {
+
+    public Question createQuestion(String questionText, int rightAnswer, Quiz quiz) throws SQLException {
         Question question = new Question(questionText, rightAnswer, quiz);
         questionDAO.create(question);
         quiz.addQuestion(question);
@@ -169,14 +149,30 @@ public class Repository {
         answerDAO.create(answer);
         return answer;
     }
-    public void setAnswersForQuestion(Question question,Answer... answers) throws SQLException {
 
-        for(Answer answer: answers){
-            QuestionAnswer questionAnswer = new QuestionAnswer(question,answer);
+    public void setAnswersForQuestion(Question question, Answer... answers) throws SQLException {
+
+        for (Answer answer : answers) {
+            QuestionAnswer questionAnswer = new QuestionAnswer(question, answer);
             questionAnswerDAO.create(questionAnswer);
         }
     }
 
+    public void addUser(User user) throws SQLException {
+        userDAO.create(user);
+
+    }
+
+    public User getUser() throws SQLException {
+        return userDAO.getUser();
+    }
+
+    public File getPhotoFile(User user){
+        String filename = user.getPhotoFileName();
+        File fileDir = context.getFilesDir();
+        return new File(fileDir,filename);
+
+    }
 
 
 }

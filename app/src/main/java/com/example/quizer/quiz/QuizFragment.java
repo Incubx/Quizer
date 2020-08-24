@@ -16,9 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.quizer.R;
-import com.example.quizer.model.Answer;
-import com.example.quizer.model.Question;
-import com.example.quizer.model.Quiz;
+import com.example.quizer.quizModel.Answer;
+import com.example.quizer.quizModel.Question;
+import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.database.Repository;
 import com.example.quizer.recyclerView.ListFragmentActivity;
 

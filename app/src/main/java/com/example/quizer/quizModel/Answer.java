@@ -1,4 +1,4 @@
-package com.example.quizer.model;
+package com.example.quizer.quizModel;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

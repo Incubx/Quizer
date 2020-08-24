@@ -1,4 +1,4 @@
-package com.example.quizer.model;
+package com.example.quizer.quizModel;
 
 import androidx.annotation.NonNull;
 

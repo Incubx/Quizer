@@ -19,10 +19,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizer.pager.QuizPagerActivity;
-import com.example.quizer.model.Quiz;
+import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.quiz.QuizActivity;
 import com.example.quizer.database.Repository;
 import com.example.quizer.R;
+import com.example.quizer.userCabinet.UserCabinetActivity;
 
 
 import java.util.List;
@@ -68,6 +69,11 @@ public class QuizListFragment extends Fragment {
             case R.id.menu_item_about:
                 Toast.makeText(getActivity(), "This is about Toast!", Toast.LENGTH_LONG).show();
                 return true;
+            case R.id.menu_item_user_cabinet:
+                //this intent doesn't contain any user info, cause of 1 user in DataBase.
+                Intent intent = UserCabinetActivity.newIntent(getActivity());
+                startActivity(intent);
+
             default:
                 return super.onOptionsItemSelected(item);
         }

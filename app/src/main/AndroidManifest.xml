@@ -25,6 +25,17 @@
             android:name=".quiz.QuizActivity"
             android:parentActivityName =".recyclerView.ListFragmentActivity">
         </activity>
+        <activity android:name=".userCabinet.UserCabinetActivity"></activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.quizer.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/files"/>
+        </provider>
     </application>
 
 </manifest>

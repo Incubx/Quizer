@@ -4,12 +4,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.quizer.model.Quiz;
+import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.R;
 
 public abstract class GenericQuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

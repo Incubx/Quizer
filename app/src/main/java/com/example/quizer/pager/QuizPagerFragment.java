@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.quizer.model.Quiz;
+import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.database.Repository;
 import com.example.quizer.R;
 

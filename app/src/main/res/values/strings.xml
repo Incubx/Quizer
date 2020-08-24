@@ -30,4 +30,7 @@
     <string name="about_menu_item">About</string>
     <string name="buy_notice">You should buy this quiz first</string>
     <string name="share_btn">Share</string>
+    <string name="user_cabinet_btn">User cabinet</string>
+    <string name="create_photo_btn">Create photo</string>
+    <string name="rating_text">Rating: %d</string>
 </resources>

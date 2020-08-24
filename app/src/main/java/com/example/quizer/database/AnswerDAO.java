@@ -1,6 +1,6 @@
 package com.example.quizer.database;
 
-import com.example.quizer.model.Answer;
+import com.example.quizer.quizModel.Answer;
 
 import com.j256.ormlite.dao.BaseDaoImpl;
 
