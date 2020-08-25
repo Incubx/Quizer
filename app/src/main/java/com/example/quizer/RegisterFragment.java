@@ -1,4 +1,4 @@
-package com.example.quizer.userCabinet;
+package com.example.quizer;
 
 import android.Manifest;
 import android.app.Activity;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +40,7 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 
 @SuppressWarnings("ConstantConditions")
-public class UserCabinetFragment extends Fragment {
+public class RegisterFragment extends Fragment {
 
     private final int REQUEST_CAMERA = 0;
     private final int REQUEST_PHOTO = 1;
@@ -52,9 +52,8 @@ public class UserCabinetFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_user_cabinet, container, false);
-        try {
-            //setting user info fields.
-            User user = Repository.getInstance(getActivity()).getUser();
+        //setting user info fields.
+            /*User user = Repository.getInstance(getActivity()).getUser();
             TextView nicknameTextView = v.findViewById(R.id.nickname_text);
             nicknameTextView.setText(user.getNickname());
             TextView ratingTextView = v.findViewById(R.id.rating_text);
@@ -64,26 +63,23 @@ public class UserCabinetFragment extends Fragment {
             photoFile = Repository.getInstance(getActivity()).getPhotoFile(user);
             if (photoFile.exists()) {
                 updateUserPhoto();
+            }*/
+
+        final AlertDialog.Builder builder = getChosePhotoDialog();
+
+        //Setting for choosing photo button.
+        final Button button = v.findViewById(R.id.create_photo_button);
+        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        PackageManager packageManager = getActivity().getPackageManager();
+        button.setEnabled(captureImage.resolveActivity(packageManager) != null);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                builder.show();
             }
-
-            final android.app.AlertDialog.Builder builder = getChosePhotoDialog();
-
-            //Setting for choosing photo button.
-            final Button button = v.findViewById(R.id.create_photo_button);
-            final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            PackageManager packageManager = getActivity().getPackageManager();
-            button.setEnabled(captureImage.resolveActivity(packageManager) != null);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    builder.show();
-                }
-            });
+        });
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return v;
     }
     //alertDialog for choosing photo and creating right intent.

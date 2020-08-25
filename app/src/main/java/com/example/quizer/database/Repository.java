@@ -125,7 +125,7 @@ public class Repository {
         setAnswersForQuestion(question2, answer1, answer4, answer5, answer2);
 
         User user = new User("Pixel",0);
-        addUser(user);
+        //addUser(user);
 
 
     }

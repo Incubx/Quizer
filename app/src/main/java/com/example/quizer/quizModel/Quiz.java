@@ -81,6 +81,7 @@ public class Quiz implements Serializable {
         return size;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Quiz{" +

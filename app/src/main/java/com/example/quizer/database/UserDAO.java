@@ -1,6 +1,5 @@
 package com.example.quizer.database;
 
-import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.userCabinet.User;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.support.ConnectionSource;
@@ -14,8 +13,9 @@ public class UserDAO extends BaseDaoImpl<User, Integer> {
     }
 
 
-
     public User getUser() throws SQLException {
-        return queryForAll().get(0);
+        List<User> userList = queryForAll();
+        if (userList.size() == 0) return null;
+        else return userList.get(0);
     }
 }

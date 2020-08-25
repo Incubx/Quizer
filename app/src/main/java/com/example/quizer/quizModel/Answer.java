@@ -1,5 +1,7 @@
 package com.example.quizer.quizModel;
 
+import androidx.annotation.NonNull;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -27,6 +29,7 @@ public class Answer {
         this.answerText = answerText;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Answer{" +
