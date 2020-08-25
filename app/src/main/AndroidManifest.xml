@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.quizer">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,9 +24,8 @@
         </activity>
         <activity
             android:name=".quiz.QuizActivity"
-            android:parentActivityName =".recyclerView.ListFragmentActivity">
-        </activity>
-        <activity android:name=".userCabinet.UserCabinetActivity"></activity>
+            android:parentActivityName=".recyclerView.ListFragmentActivity" />
+        <activity android:name=".userCabinet.UserCabinetActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -34,8 +34,9 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/files"/>
+                android:resource="@xml/files" />
         </provider>
+
     </application>
 
 </manifest>

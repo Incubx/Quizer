@@ -1,13 +1,14 @@
 package com.example.quizer.userCabinet;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
@@ -29,10 +31,12 @@ import com.example.quizer.R;
 import com.example.quizer.database.Repository;
 
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.SQLException;
 
 public class UserCabinetFragment extends Fragment {
@@ -61,35 +65,9 @@ public class UserCabinetFragment extends Fragment {
                 updateUserPhoto();
             }
 
-            //intent for getting picture.
-            final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
-            final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-            builder.setTitle("Add Photo!");
-            builder.setItems(items, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    if (items[i].equals("Take Photo")) {
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        Uri uri = FileProvider.getUriForFile(getActivity(),
-                                "com.example.quizer.fileprovider",
-                                photoFile);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                        startActivityForResult(intent, REQUEST_CAMERA);
-                    } else if (items[i].equals("Choose from Library")) {
-                        Intent intent = new Intent(
-                                Intent.ACTION_PICK,
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        Uri uri = FileProvider.getUriForFile(getActivity(),
-                                "com.example.quizer.fileprovider",
-                                photoFile);
-                        startActivityForResult(intent, REQUEST_PHOTO);
-                    } else if (items[i].equals("Cancel")) {
-                        dialogInterface.dismiss();
-                    }
+            final android.app.AlertDialog.Builder builder = getChosePhotoDialog();
 
-                }
-            });
-
+            //Setting for choosing photo button.
             final Button button = v.findViewById(R.id.create_photo_button);
             final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             PackageManager packageManager = getActivity().getPackageManager();
@@ -106,6 +84,36 @@ public class UserCabinetFragment extends Fragment {
             e.printStackTrace();
         }
         return v;
+    }
+    //alertDialog for choosing photo and creating right intent.
+    private AlertDialog.Builder getChosePhotoDialog() {
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (items[i].equals("Take Photo")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    Uri uri = FileProvider.getUriForFile(getActivity(),
+                            "com.example.quizer.fileprovider",
+                            photoFile);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[i].equals("Choose from Library")) {
+                    getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    Intent intent = new Intent(
+                            Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, REQUEST_PHOTO);
+                } else if (items[i].equals("Cancel")) {
+                    dialogInterface.dismiss();
+                }
+
+            }
+        });
+        return  builder;
     }
 
     private void updateUserPhoto() {
@@ -125,18 +133,8 @@ public class UserCabinetFragment extends Fragment {
             onCaptureImageResult();
         }
         if (requestCode == REQUEST_PHOTO) {
-            onSelectFromGalleryResult(data);
-        }
-    }
-
-    private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bitmap = null;
-        if (data != null) {
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(),
-                        data.getData());
-                saveBitmap(bitmap);
-                updateUserPhoto();
+                onSelectFromGalleryResult(data);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -144,25 +142,42 @@ public class UserCabinetFragment extends Fragment {
 
     }
 
-    private void onCaptureImageResult() {
-        Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath());
-        saveBitmap(bitmap);
+    private void onSelectFromGalleryResult(Intent data) throws IOException {
+        Uri selectedImage = data.getData();
+        String chosenPicPath = getPath(selectedImage);
+        File sourceLocation = new File(chosenPicPath);
+        copyFile(sourceLocation, photoFile);
         updateUserPhoto();
     }
 
-    private void saveBitmap(Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        FileOutputStream fo;
-        try {
-            photoFile.createNewFile();
-            fo = new FileOutputStream(photoFile);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String s = cursor.getString(column_index);
+        cursor.close();
+        return s;
     }
 
+    private void copyFile(File from, File to) throws IOException {
+        InputStream in = new FileInputStream(from);
+        OutputStream out = new FileOutputStream(to);
+        byte[] buf = new byte[1024];
+        int len;
+
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+
+        in.close();
+        out.close();
+    }
+
+
+    private void onCaptureImageResult() {
+        updateUserPhoto();
+    }
 
 }
