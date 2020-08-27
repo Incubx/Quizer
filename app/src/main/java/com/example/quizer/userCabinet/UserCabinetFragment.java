@@ -21,6 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
@@ -44,6 +45,8 @@ public class UserCabinetFragment extends Fragment {
 
     private final int REQUEST_CAMERA = 0;
     private final int REQUEST_PHOTO = 1;
+
+    private final int REQUEST_PERMISSION = 2;
     private File photoFile;
     ImageView photoView;
 
@@ -86,6 +89,7 @@ public class UserCabinetFragment extends Fragment {
         }
         return v;
     }
+
     //alertDialog for choosing photo and creating right intent.
     private AlertDialog.Builder getChosePhotoDialog() {
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
@@ -103,18 +107,27 @@ public class UserCabinetFragment extends Fragment {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                     startActivityForResult(intent, REQUEST_CAMERA);
                 } else if (items[i].equals("Choose from Library")) {
-                    getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
-                    Intent intent = new Intent(
-                            Intent.ACTION_PICK,
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_PHOTO);
+                    int permissionStatus = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+                    if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
+                        getPhotoFromGallery();
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                REQUEST_PERMISSION);
+                    }
                 } else if (items[i].equals("Cancel")) {
                     dialogInterface.dismiss();
                 }
 
             }
         });
-        return  builder;
+        return builder;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getPhotoFromGallery();
+        }
     }
 
     private void updateUserPhoto() {
@@ -122,6 +135,13 @@ public class UserCabinetFragment extends Fragment {
         Glide.with(getActivity()).load(photoFile).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
                 .centerCrop()
                 .into(photoView);
+    }
+
+    private void getPhotoFromGallery() {
+        Intent intent = new Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_PHOTO);
     }
 
 
