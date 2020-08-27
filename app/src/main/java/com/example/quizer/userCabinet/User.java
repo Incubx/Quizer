@@ -23,6 +23,8 @@ public class User {
 
     public User(String nickname) {
         this.nickname = nickname;
+        this.rating=0;
+        this.photoFileName = "User_photo_"+nickname+".jpg";
     }
 
     public User(String nickname, int rating) {

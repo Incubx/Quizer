@@ -5,5 +5,6 @@
     <color name="colorAccent">#63a583</color>
     <color name="color_quiz_item_free">#63a583</color>
     <color name="color_quiz_item">#6e93d6</color>
+    <color name="registration_text_color">#373938</color>
 
 </resources>

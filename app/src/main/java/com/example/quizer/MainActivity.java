@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.quizer.database.Repository;
 import com.example.quizer.recyclerView.QuizListFragment;
+import com.example.quizer.userCabinet.RegisterFragment;
 import com.example.quizer.userCabinet.User;
 
 import java.sql.SQLException;
