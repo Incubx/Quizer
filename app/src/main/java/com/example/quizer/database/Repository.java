@@ -171,7 +171,10 @@ public class Repository {
         String filename = user.getPhotoFileName();
         File fileDir = context.getFilesDir();
         return new File(fileDir,filename);
+    }
 
+    public void updateUser(User user) throws SQLException {
+        userDAO.update(user);
     }
 
 

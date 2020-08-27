@@ -21,7 +21,9 @@ import com.example.quizer.quizModel.Question;
 import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.database.Repository;
 import com.example.quizer.recyclerView.ListFragmentActivity;
+import com.example.quizer.userCabinet.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,14 +142,23 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         }
         questionIndex++;
         if (questionIndex >= questions.size()) {
-            finishQuiz();
+            try {
+                finishQuiz();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } else
             setCurrentQuestion();
 
     }
 
-    private void finishQuiz() {
-        quiz.setSolved(true);
+    private void finishQuiz() throws SQLException {
+        if (quiz.getSize() == correctAnswers) {
+            User user = Repository.getInstance(getActivity()).getUser();
+            user.increaseRating(1);
+            Repository.getInstance(getActivity()).updateUser(user);
+            quiz.setSolved(true);
+        }
         Repository.getInstance(getActivity()).updateQuiz(quiz);
         Toast.makeText(getActivity(), quiz.isSolved() + quiz.getTitle(), Toast.LENGTH_LONG).show();
         String finalText = setFinalText();

@@ -1,6 +1,7 @@
 package com.example.quizer.userCabinet;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +20,13 @@ import androidx.fragment.app.Fragment;
 import com.example.quizer.R;
 import com.example.quizer.database.Repository;
 import com.example.quizer.recyclerView.ListFragmentActivity;
-import com.j256.ormlite.stmt.query.In;
+
 
 import java.sql.SQLException;
 
 
 @SuppressWarnings("ConstantConditions")
-public class RegisterFragment extends Fragment {
+public class RegistrationFragment extends Fragment {
 
     private EditText nicknameText;
     private EditText passwordText;
@@ -66,8 +66,13 @@ public class RegisterFragment extends Fragment {
         nicknameText = v.findViewById(R.id.nickname_edit_text);
         passwordText = v.findViewById(R.id.password_edit_text);
         emailText = v.findViewById(R.id.email_edit_text);
-        EditTextListener listener = new EditTextListener();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            nicknameText.setFocusedByDefault(false);
+        }
+        nicknameText.setNextFocusDownId(R.id.email_edit_text);
+        emailText.setNextFocusDownId(R.id.email_edit_text);
 
+        EditTextListener listener = new EditTextListener();
         nicknameText.addTextChangedListener(listener);
         passwordText.addTextChangedListener(listener);
         emailText.addTextChangedListener(listener);

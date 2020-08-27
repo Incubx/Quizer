@@ -47,6 +47,7 @@ public class UserCabinetFragment extends Fragment {
     private final int REQUEST_PHOTO = 1;
 
     private final int REQUEST_PERMISSION = 2;
+
     private File photoFile;
     ImageView photoView;
 

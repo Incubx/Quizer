@@ -37,23 +37,17 @@ public class User {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 
     public int getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public void setPhotoFileName(String photoFileName) {
-        this.photoFileName = photoFileName;
-    }
 
     public String getPhotoFileName() {
         return photoFileName;
+    }
+
+    public void increaseRating(int points){
+        rating+=points;
     }
 }
