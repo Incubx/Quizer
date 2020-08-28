@@ -12,26 +12,31 @@ public class User {
     @DatabaseField(columnName = "nickname")
     private String nickname;
 
+    @DatabaseField(columnName = "email")
+    private String email;
+
+    @DatabaseField(columnName = "password")
+    private String password;
+
     @DatabaseField(columnName = "rating")
     private int rating;
 
     @DatabaseField(columnName = "photo")
     private String photoFileName;
 
+
+
     public User() {
     }
 
-    public User(String nickname) {
+    public User(String nickname,String email,String password) {
         this.nickname = nickname;
+        this.email = email;
+        this.password= password;
         this.rating=0;
         this.photoFileName = "User_photo_"+nickname+".jpg";
     }
 
-    public User(String nickname, int rating) {
-        this.nickname = nickname;
-        this.rating = rating;
-        this.photoFileName = "User_photo_"+nickname+".jpg";
-    }
 
     public String getNickname() {
         return nickname;
@@ -41,6 +46,15 @@ public class User {
     public int getRating() {
         return rating;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 
 
     public String getPhotoFileName() {

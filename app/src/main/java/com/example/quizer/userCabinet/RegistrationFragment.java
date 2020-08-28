@@ -83,7 +83,7 @@ public class RegistrationFragment extends Fragment {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = new User(nicknameText.getText().toString());
+                User user = getUserFromForm();
                 try {
                     Repository.getInstance(getActivity()).addUser(user);
                     Intent intent = new Intent(getActivity(), ListFragmentActivity.class);
@@ -96,6 +96,12 @@ public class RegistrationFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private User getUserFromForm(){
+        return new User(nicknameText.getText().toString(),
+                emailText.getText().toString(),
+                passwordText.getText().toString());
     }
 
 

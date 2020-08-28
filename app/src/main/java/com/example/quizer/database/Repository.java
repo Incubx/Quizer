@@ -110,7 +110,7 @@ public class Repository {
 
 
         //Filling database with some data
-        Quiz quiz = createQuiz("First Quiz", 5, false, false);
+        Quiz quiz = createQuiz("First Quiz", 2, false, false);
 
         Question question1 = createQuestion("Capital of Russia", 0, quiz);
         Question question2 = createQuestion("Capital of USA", 1, quiz);
@@ -124,7 +124,7 @@ public class Repository {
         setAnswersForQuestion(question1, answer1, answer2, answer3, answer4);
         setAnswersForQuestion(question2, answer1, answer4, answer5, answer2);
 
-        User user = new User("Pixel",0);
+        //User user = new User("Pixel","123@mail.ru","123");
         //addUser(user);
 
 

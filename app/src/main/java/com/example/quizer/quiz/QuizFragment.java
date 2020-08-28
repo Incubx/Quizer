@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@SuppressWarnings("ConstantConditions")
 public class QuizFragment extends Fragment implements View.OnClickListener {
 
     private final String CORRECT_ANSWERS_KEY = "correct_answers";
@@ -155,8 +155,10 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     private void finishQuiz() throws SQLException {
         if (quiz.getSize() == correctAnswers) {
             User user = Repository.getInstance(getActivity()).getUser();
-            user.increaseRating(1);
-            Repository.getInstance(getActivity()).updateUser(user);
+            if (!quiz.isSolved()) {
+                user.increaseRating(1);
+                Repository.getInstance(getActivity()).updateUser(user);
+            }
             quiz.setSolved(true);
         }
         Repository.getInstance(getActivity()).updateQuiz(quiz);
