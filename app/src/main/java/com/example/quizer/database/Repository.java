@@ -16,7 +16,6 @@ public class Repository {
 
     private static Repository repository;
     private Context context;
-    private final QuizDAO quizDAO;
 
 
     public static Repository getInstance(Context context) {
@@ -34,28 +33,14 @@ public class Repository {
 
         this.context = context.getApplicationContext();
 
-        //getting all DAOs
-        DatabaseHelper helper = new DatabaseHelper(context);
-        quizDAO = helper.getQuizDAO();
 
     }
 
     public List<Quiz> getQuizList() {
-        try {
-            return quizDAO.getQuizList();
-        } catch (SQLException e) {
-            Log.e("DATABASE ERROR", "getQuizList: ERROR");
-            e.printStackTrace();
-        }
         return new ArrayList<>();
     }
 
     public Quiz getQuiz(String title) {
-        try {
-            return quizDAO.getQuizByTitle(title);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 

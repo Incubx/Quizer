@@ -17,9 +17,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "quizBase.db";
     private static final int VERSION = 1;
 
-    private static QuizDAO quizDAO;
-    private static QuestionDAO questionDAO;
-    private static AnswerDAO answerDAO;
     private static UserDAO userDAO;
 
 
@@ -30,9 +27,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, Quiz.class);
-            TableUtils.createTable(connectionSource, Question.class);
-            TableUtils.createTable(connectionSource, Answer.class);
             TableUtils.createTable(connectionSource,User.class);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,16 +49,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-        quizDAO = null;
-        questionDAO = null;
-        answerDAO=null;
+        userDAO=null;
     }
 
-    public QuizDAO getQuizDAO() throws SQLException {
-        if (quizDAO == null)
-            quizDAO = new QuizDAO(getConnectionSource(), Quiz.class);
-        return quizDAO;
-    }
+
 
     public UserDAO getUserDAO() throws SQLException {
         if (userDAO == null)
@@ -72,17 +60,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return userDAO;
     }
 
-    public QuestionDAO getQuestionDAO() throws SQLException {
-        if (questionDAO == null)
-            questionDAO = new QuestionDAO(getConnectionSource(), Question.class);
-        return questionDAO;
-    }
-
-    public AnswerDAO getAnswerDAO() throws SQLException {
-        if (answerDAO == null)
-            answerDAO = new AnswerDAO(getConnectionSource(), Answer.class);
-        return answerDAO;
-    }
 
 
 
