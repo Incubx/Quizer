@@ -73,7 +73,12 @@ public class QuizListFragment extends Fragment {
                 //this intent doesn't contain any user info, cause of 1 user in DataBase.
                 Intent intent = UserCabinetActivity.newIntent(getActivity());
                 startActivity(intent);
-
+                return true;
+            case R.id.update_quiz_btn:
+                Repository.getInstance(getActivity()).updateQuizList();
+                Toast.makeText(getActivity(), "This is about Toast!", Toast.LENGTH_LONG).show();
+                updateUI();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -87,6 +92,7 @@ public class QuizListFragment extends Fragment {
             adapter = new QuizAdapter(quizList);
             recyclerView.setAdapter(adapter);
         } else {
+            adapter.setQuizList(quizList);
             adapter.notifyDataSetChanged();
         }
     }
@@ -101,7 +107,7 @@ public class QuizListFragment extends Fragment {
             buyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    quiz.setFree(true);
+                    quiz.setPaid(true);
                     Repository.getInstance(getActivity()).updateQuiz(quiz);
                     Toast.makeText(getActivity(), "Thanks for buying this quiz!", Toast.LENGTH_LONG).show();
                     updateUI();
@@ -186,9 +192,13 @@ public class QuizListFragment extends Fragment {
         @Override
         public int getItemViewType(int position) {
 
-            if (quizList.get(position).isFree())
+            if (quizList.get(position).isPaid())
                 return FREE_QUIZ;
             else return NOT_FREE_QUIZ;
+        }
+
+        public void setQuizList(List<Quiz> quizList) {
+            this.quizList = quizList;
         }
     }
 }

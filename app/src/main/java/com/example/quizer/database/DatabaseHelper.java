@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.quizer.quizModel.Answer;
 import com.example.quizer.quizModel.Question;
-import com.example.quizer.quizModel.QuestionAnswer;
 import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.userCabinet.User;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;

@@ -38,4 +38,5 @@
     <string name="email_def_text">Email</string>
     <string name="password_def_text">Password</string>
     <string name="register_btn">Register</string>
+    <string name="update_quizList_btn">Update quiz list</string>
 </resources>

@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+//TODO remove database
+
 
 @DatabaseTable(tableName = "Quizzes")
 public class Quiz implements Serializable {
@@ -22,24 +24,24 @@ public class Quiz implements Serializable {
     private int size;
     @DatabaseField(columnName = "solved")
     private boolean solved;
-    @DatabaseField(columnName = "free")
-    private boolean free;
+    @DatabaseField(columnName = "paid")
+    private boolean paid;
     @ForeignCollectionField(eager = true)
     private Collection<Question> questions;
 
-    public Quiz(String title, int size, boolean solved, boolean free, @NonNull Collection<Question> questions) {
+    public Quiz(String title, int size, boolean solved, boolean paid, @NonNull Collection<Question> questions) {
         this.title = title;
         this.size = size;
         this.solved = solved;
-        this.free = free;
+        this.paid = paid;
         this.questions = questions;
     }
 
-    public Quiz(String title, int size, boolean solved, boolean free) {
+    public Quiz(String title, int size, boolean solved, boolean paid) {
         this.title = title;
         this.size = size;
         this.solved = solved;
-        this.free = free;
+        this.paid = paid;
         questions = new ArrayList<>();
     }
 
@@ -52,12 +54,12 @@ public class Quiz implements Serializable {
     }
 
 
-    public boolean isFree() {
-        return free;
+    public boolean isPaid() {
+        return paid;
     }
 
-    public void setFree(boolean free) {
-        this.free = free;
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
     public boolean isSolved() {
@@ -89,7 +91,7 @@ public class Quiz implements Serializable {
                 ", title='" + title + '\'' +
                 ", size=" + size +
                 ", solved=" + solved +
-                ", free=" + free +
+                ", free=" + paid +
                 '}';
     }
 

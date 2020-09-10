@@ -8,10 +8,16 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "Answers")
 public class Answer {
     @DatabaseField(columnName = "id", generatedId = true)
-    @SuppressWarnings("unused")
+
     private int id;
     @DatabaseField(columnName = "text",unique = true)
     private String answerText;
+
+    @DatabaseField(columnName = "isCorrect")
+    private boolean correct;
+
+    @DatabaseField(foreign = true,columnName = "questionId")
+    private Question question;
 
     @SuppressWarnings("unused")
     public Answer() {

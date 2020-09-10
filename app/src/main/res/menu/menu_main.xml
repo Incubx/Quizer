@@ -3,10 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/update_quiz_btn"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:title="@string/update_quizList_btn"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menu_item_user_cabinet"
         android:icon="@drawable/user_cabinet_icon"
         android:title="@string/user_cabinet_btn"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_item_about"
         android:icon="@android:drawable/ic_menu_info_details"
