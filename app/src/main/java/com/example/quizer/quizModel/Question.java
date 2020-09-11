@@ -53,4 +53,8 @@ public class Question {
                 ", question='" + questionText + '\'' +
                 '}';
     }
+
+    public int getRightAnswer() {
+        return  0;
+    }
 }
