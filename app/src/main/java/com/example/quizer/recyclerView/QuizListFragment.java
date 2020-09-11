@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizer.pager.QuizPagerActivity;
@@ -26,7 +25,12 @@ import com.example.quizer.R;
 import com.example.quizer.userCabinet.UserCabinetActivity;
 
 
+import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class QuizListFragment extends Fragment {
@@ -44,17 +48,17 @@ public class QuizListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_quiz_list, container, false);
-        recyclerView = v.findViewById(R.id.quizRecyclerView);
+        View v = inflater.inflate(R.layout.fragment_registration, container, false);
+        /*recyclerView = v.findViewById(R.id.quizRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        updateUI();
+        updateUI();*/
         return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
+       // updateUI();
     }
 
     @Override
@@ -75,9 +79,19 @@ public class QuizListFragment extends Fragment {
                 startActivity(intent);
                 return true;
             case R.id.update_quiz_btn:
-                Repository.getInstance(getActivity()).updateQuizList();
-                Toast.makeText(getActivity(), "This is about Toast!", Toast.LENGTH_LONG).show();
-                updateUI();
+                Repository.getInstance(getActivity()).getQuizAPI().getQuizList().enqueue(new Callback<List<Quiz>>() {
+                    @Override
+                    public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
+                        Toast.makeText(getActivity(),response.body().get(0).toString(),Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Quiz>> call, Throwable t) {
+
+                    }
+                });
+
+                //updateUI();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

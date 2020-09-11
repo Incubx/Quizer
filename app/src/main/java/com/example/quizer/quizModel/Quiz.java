@@ -92,6 +92,7 @@ public class Quiz implements Serializable {
                 ", size=" + size +
                 ", solved=" + solved +
                 ", free=" + paid +
+                ", questions="+questions+
                 '}';
     }
 

@@ -18,7 +18,7 @@ public class Question {
     private Quiz quiz;
 
     @ForeignCollectionField(eager = true)
-    private Collection<Question> answers;
+    private Collection<Answer> answers;
 
 
     public Question() {
@@ -51,6 +51,7 @@ public class Question {
         return "Question{" +
                 "id=" + id +
                 ", question='" + questionText + '\'' +
+                ", answers="+answers+
                 '}';
     }
 

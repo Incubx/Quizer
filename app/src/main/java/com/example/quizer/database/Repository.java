@@ -10,11 +10,19 @@ import com.example.quizer.quizModel.Answer;
 import com.example.quizer.quizModel.Question;
 import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.userCabinet.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -23,7 +31,7 @@ public class Repository {
     private static Repository repository;
     private Context context;
     private Retrofit retrofit;
-    private final String BASE_URL = "http://localhost:8080";
+    private final String BASE_URL = "http://192.168.9.9:8080/";
     private UserDAO userDAO;
 
     public static Repository getInstance(Context context) {
@@ -38,9 +46,22 @@ public class Repository {
     }
 
     private Repository(Context context) throws SQLException {
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor);
+
+
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setLenient();
+        Gson gson = gsonBuilder.create();
+
         retrofit= new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client.build())
                 .build();
 
         this.context = context.getApplicationContext();
@@ -74,9 +95,6 @@ public class Repository {
         return null;
     }
 
-    public void updateUser(User user) {
-
-    }
 
     public void updateQuiz(Quiz quiz) {
 
@@ -89,7 +107,13 @@ public class Repository {
         userDAO.create(user);
     }
 
-    public File getPhotoFile(User user) {
-        user.getPhotoFileName()
+    public File getPhotoFile(User user){
+        String filename = user.getPhotoFileName();
+        File fileDir = context.getFilesDir();
+        return new File(fileDir,filename);
+    }
+
+    public void updateUser(User user) throws SQLException {
+        userDAO.update(user);
     }
 }
