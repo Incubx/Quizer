@@ -1,47 +1,42 @@
 package com.example.quizer.database;
 
 import android.content.Context;
-import android.util.Log;
 
 
 
 //TODO create REST Client
-import com.example.quizer.quizModel.Quiz;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Repository {
 
     private static Repository repository;
     private Context context;
-
+    private Retrofit retrofit;
+    private final String BASE_URL = "http://localhost:8080";
+    private UserDAO userDAO;
 
     public static Repository getInstance(Context context) {
         if (repository == null) {
-            try {
                 repository = new Repository(context);
-            } catch (SQLException e) {
-                Log.e("MyERROR", "getInstance: " + e.getMessage());
-            }
         }
         return repository;
     }
 
-    private Repository(Context context) throws SQLException {
+    private Repository(Context context) {
+        retrofit= new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         this.context = context.getApplicationContext();
-
-
+        //UserDAO = new UserDAO();
     }
 
-    public List<Quiz> getQuizList() {
-        return new ArrayList<>();
-    }
 
-    public Quiz getQuiz(String title) {
-        return null;
+    public QuizAPI getQuizAPI(){
+        return retrofit.create(QuizAPI.class);
     }
 
 
