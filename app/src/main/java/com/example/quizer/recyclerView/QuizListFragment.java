@@ -15,9 +15,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.quizer.pager.QuizPagerActivity;
 import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.quiz.QuizActivity;
 import com.example.quizer.database.Repository;
@@ -48,10 +48,10 @@ public class QuizListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_registration, container, false);
-        /*recyclerView = v.findViewById(R.id.quizRecyclerView);
+        View v = inflater.inflate(R.layout.fragment_quiz_list, container, false);
+        recyclerView = v.findViewById(R.id.quizRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        updateUI();*/
+        updateUI();
         return v;
     }
 
@@ -81,12 +81,12 @@ public class QuizListFragment extends Fragment {
             case R.id.update_quiz_btn:
                 Repository.getInstance(getActivity()).getQuizAPI().getQuizList().enqueue(new Callback<List<Quiz>>() {
                     @Override
-                    public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
+                    public void onResponse(@NonNull Call<List<Quiz>> call, @NonNull Response<List<Quiz>> response) {
                         Toast.makeText(getActivity(),response.body().get(0).toString(),Toast.LENGTH_LONG).show();
                     }
 
                     @Override
-                    public void onFailure(Call<List<Quiz>> call, Throwable t) {
+                    public void onFailure(@NonNull Call<List<Quiz>> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -127,14 +127,6 @@ public class QuizListFragment extends Fragment {
                     updateUI();
                 }
             });
-            aboutBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String title = quiz.getTitle();
-                    Intent intent = QuizPagerActivity.newIntent(getActivity(), title);
-                    startActivity(intent);
-                }
-            });
         }
 
         @Override
@@ -152,19 +144,11 @@ public class QuizListFragment extends Fragment {
             super(inflater.inflate(R.layout.list_item_quiz, parent, false));
             itemView.setOnClickListener(this);
             findViews();
-            aboutBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String title = quiz.getTitle();
-                    Intent intent = QuizPagerActivity.newIntent(getActivity(), title);
-                    startActivity(intent);
-                }
-            });
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = QuizActivity.newIntent(getActivity(), quiz.getTitle());
+            Intent intent = QuizActivity.newIntent(getActivity(), quiz.getId());
             startActivity(intent);
         }
     }

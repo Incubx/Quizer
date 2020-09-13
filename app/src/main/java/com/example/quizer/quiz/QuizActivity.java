@@ -20,9 +20,9 @@ public class QuizActivity extends SingleFragmentActivity {
     }
 
     @NonNull
-    public static Intent newIntent(Context context, String quizTitle) {
+    public static Intent newIntent(Context context, int id) {
         Intent intent = new Intent(context, QuizActivity.class);
-        intent.putExtra(INTENT_EXTRA_QUIZ, quizTitle);
+        intent.putExtra(INTENT_EXTRA_QUIZ, id);
         return intent;
     }
 

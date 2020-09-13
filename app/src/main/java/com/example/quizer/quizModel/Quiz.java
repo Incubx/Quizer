@@ -49,6 +49,10 @@ public class Quiz implements Serializable {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Collection<Question> getQuestions() {
         return questions;
     }

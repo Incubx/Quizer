@@ -79,7 +79,7 @@ public class Repository {
     }
 
 
-    public Quiz getQuiz(String title) {
+    /*public Quiz getQuiz(String title) {
         return null;
     }
 
@@ -93,7 +93,7 @@ public class Repository {
 
     public List<Answer> getAnswerByQuestion(Question currentQuestion) {
         return null;
-    }
+    }*/
 
 
     public void updateQuiz(Quiz quiz) {
