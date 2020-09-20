@@ -4,7 +4,8 @@ import android.content.Context;
 
 
 
-//TODO create REST Client
+//TODO saving completed quizzes in SharedPreferences
+//TODO save info about quizzes that was bought in SharedPref
 
 import com.example.quizer.quizModel.Answer;
 import com.example.quizer.quizModel.Question;

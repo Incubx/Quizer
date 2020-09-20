@@ -90,7 +90,6 @@ public class QuizListFragment extends Fragment {
 
                     }
                 });
-
                 //updateUI();
                 return true;
             default:
@@ -191,8 +190,8 @@ public class QuizListFragment extends Fragment {
         public int getItemViewType(int position) {
 
             if (quizList.get(position).isPaid())
-                return FREE_QUIZ;
-            else return NOT_FREE_QUIZ;
+                return NOT_FREE_QUIZ;
+            else return FREE_QUIZ;
         }
 
         public void setQuizList(List<Quiz> quizList) {
