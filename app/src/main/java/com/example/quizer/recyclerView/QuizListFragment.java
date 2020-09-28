@@ -24,8 +24,7 @@ import com.example.quizer.database.Repository;
 import com.example.quizer.R;
 import com.example.quizer.userCabinet.UserCabinetActivity;
 
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -58,7 +57,7 @@ public class QuizListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-       // updateUI();
+        updateUI();
     }
 
     @Override
@@ -79,18 +78,7 @@ public class QuizListFragment extends Fragment {
                 startActivity(intent);
                 return true;
             case R.id.update_quiz_btn:
-                Repository.getInstance(getActivity()).getQuizAPI().getQuizList().enqueue(new Callback<List<Quiz>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<Quiz>> call, @NonNull Response<List<Quiz>> response) {
-                        Toast.makeText(getActivity(),response.body().get(0).toString(),Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<Quiz>> call, @NonNull Throwable t) {
-
-                    }
-                });
-                //updateUI();
+                updateUI();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -99,15 +87,31 @@ public class QuizListFragment extends Fragment {
     }
 
     private void updateUI() {
-        Repository repository = Repository.getInstance(getActivity());
-        List<Quiz> quizList = repository.getQuizList();
-        if (adapter == null) {
-            adapter = new QuizAdapter(quizList);
-            recyclerView.setAdapter(adapter);
-        } else {
-            adapter.setQuizList(quizList);
-            adapter.notifyDataSetChanged();
-        }
+        Repository.getInstance(getActivity())
+                .getQuizAPI()
+                .getQuizList().enqueue(new Callback<List<Quiz>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Quiz>> call, @NonNull Response<List<Quiz>> response) {
+                List<Quiz> quizList = response.body();
+                if (adapter == null) {
+                    adapter = new QuizAdapter(quizList);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    adapter.setQuizList(quizList);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Quiz>> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), "Error getting QuizList", Toast.LENGTH_LONG).show();
+                if (adapter == null) {
+                    adapter = new QuizAdapter(new ArrayList<Quiz>());
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
+
     }
 
     private class QuizHolderPaid extends GenericQuizHolder {
@@ -121,7 +125,6 @@ public class QuizListFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     quiz.setPaid(true);
-                    Repository.getInstance(getActivity()).updateQuiz(quiz);
                     Toast.makeText(getActivity(), "Thanks for buying this quiz!", Toast.LENGTH_LONG).show();
                     updateUI();
                 }

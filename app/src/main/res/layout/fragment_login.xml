@@ -10,7 +10,7 @@
         android:id="@+id/registration_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/registration_text"
+        android:text="@string/login_text"
         android:textColor="#3A433D"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,31 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_text_view">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:text="@string/nickname_def_text"
-                android:textAlignment="center"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/nickname_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textColor="#3A433D"
-                android:theme="@style/MyEditTextTheme"/>
-        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -117,7 +92,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
-                android:text="@string/register_btn"
+                android:text="@string/login_btn"
                 android:textColor="#3A433D" />
         </TableRow>
 

@@ -1,9 +1,7 @@
 package com.example.quizer.userCabinet;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -11,32 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import androidx.fragment.app.Fragment;
 
 import com.example.quizer.R;
-import com.example.quizer.database.Repository;
-import com.example.quizer.recyclerView.ListFragmentActivity;
 
+public class LogInFragment extends Fragment {
 
-import java.sql.SQLException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-
-@SuppressWarnings("ConstantConditions")
-public class RegistrationFragment extends Fragment {
-
-    private EditText nicknameText;
     private EditText passwordText;
     private EditText emailText;
-    private Button registerBtn;
+    private Button loginBtn;
 
     private class EditTextListener implements TextWatcher {
 
@@ -52,10 +36,9 @@ public class RegistrationFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (isFieldFilled(nicknameText) &&
-                    isFieldFilled(passwordText) &&
+            if (isFieldFilled(passwordText) &&
                     isFieldFilled(emailText)) {
-                registerBtn.setEnabled(true);
+                loginBtn.setEnabled(true);
             }
         }
 
@@ -64,52 +47,37 @@ public class RegistrationFragment extends Fragment {
         }
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_registration, container, false);
-        nicknameText = v.findViewById(R.id.nickname_edit_text);
         passwordText = v.findViewById(R.id.password_edit_text);
         emailText = v.findViewById(R.id.email_edit_text);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            nicknameText.setFocusedByDefault(false);
+            emailText.setFocusedByDefault(false);
         }
-        nicknameText.setNextFocusDownId(R.id.email_edit_text);
         emailText.setNextFocusDownId(R.id.email_edit_text);
 
-        EditTextListener listener = new EditTextListener();
-        nicknameText.addTextChangedListener(listener);
+        LogInFragment.EditTextListener listener = new LogInFragment.EditTextListener();
         passwordText.addTextChangedListener(listener);
         emailText.addTextChangedListener(listener);
 
-        registerBtn = v.findViewById(R.id.login_btn);
-        registerBtn.setEnabled(false);
+        loginBtn = v.findViewById(R.id.login_btn);
+        loginBtn.setEnabled(false);
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = getUserFromForm();
-                Repository.getInstance(getActivity()).getUserAPI().registerUser(user).enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
-
-                    }
-                });
-            }});
-
+                sendForm();
+            }
+        });
         return v;
     }
 
-    private User getUserFromForm(){
-        return new User(nicknameText.getText().toString(),
-                emailText.getText().toString(),
-                passwordText.getText().toString());
-    }
 
+    private void sendForm() {
+
+    }
 
 }

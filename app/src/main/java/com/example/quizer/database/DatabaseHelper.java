@@ -3,9 +3,6 @@ package com.example.quizer.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.quizer.quizModel.Answer;
-import com.example.quizer.quizModel.Question;
-import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.userCabinet.User;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -36,9 +33,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, Quiz.class, true);
-            TableUtils.dropTable(connectionSource, Question.class, true);
-            TableUtils.dropTable(connectionSource, Answer.class, true);
             TableUtils.dropTable(connectionSource, User.class,true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {

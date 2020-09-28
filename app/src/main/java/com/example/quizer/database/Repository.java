@@ -2,27 +2,16 @@ package com.example.quizer.database;
 
 import android.content.Context;
 
-
-
-//TODO saving completed quizzes in SharedPreferences
-//TODO save info about quizzes that was bought in SharedPref
-
-import com.example.quizer.quizModel.Answer;
-import com.example.quizer.quizModel.Question;
-import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.userCabinet.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 
-import okhttp3.Interceptor;
+import java.sql.SQLException;
+
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -32,7 +21,7 @@ public class Repository {
     private static Repository repository;
     private Context context;
     private Retrofit retrofit;
-    private final String BASE_URL = "http://192.168.9.9:8080/";
+    private final String BASE_URL = "http://192.168.9.4:8080/";
     private UserDAO userDAO;
 
     public static Repository getInstance(Context context) {
@@ -54,7 +43,6 @@ public class Repository {
                 .addInterceptor(interceptor);
 
 
-
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setLenient();
         Gson gson = gsonBuilder.create();
@@ -74,39 +62,13 @@ public class Repository {
             return userDAO.getUser();
     }
 
+    public UserAPI getUserAPI(){ return retrofit.create(UserAPI.class);}
+
 
     public QuizAPI getQuizAPI(){
         return retrofit.create(QuizAPI.class);
     }
 
-
-    /*public Quiz getQuiz(String title) {
-        return null;
-    }
-
-    public List<Quiz> getQuizList() {
-        return null;
-    }
-
-    public List<Question> getQuestionsByQuiz(Quiz quiz) {
-        return null;
-    }
-
-    public List<Answer> getAnswerByQuestion(Question currentQuestion) {
-        return null;
-    }*/
-
-
-    public void updateQuiz(Quiz quiz) {
-
-    }
-
-    public void updateQuizList() {
-    }
-
-    public void addUser(User user) throws SQLException {
-        userDAO.create(user);
-    }
 
     public File getPhotoFile(User user){
         String filename = user.getPhotoFileName();

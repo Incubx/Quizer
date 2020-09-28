@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">Quizer</string>
     <string name="correct_text" translatable="false">Correct!</string>
     <string name="incorrect_text" translatable="false">Incorrect!</string>
-    <string name="result">You have %d correct answers!</string>
+    <string name="result">You have %d of %d correct answers!</string>
     <string name="bad_result">You have no correct answers, try again!</string>
     <string name="buy_btn_text">Buy</string>
     <string name="title_activity_quiz_pager">QuizPagerActivity</string>
@@ -39,4 +39,7 @@
     <string name="password_def_text">Password</string>
     <string name="register_btn">Register</string>
     <string name="update_quizList_btn">Update quiz list</string>
+    <string name="login_text">Log in page</string>
+    <string name="login_btn">Log in</string>
+    <string name="no_quizzes">There aren\'t any quizzes</string>
 </resources>

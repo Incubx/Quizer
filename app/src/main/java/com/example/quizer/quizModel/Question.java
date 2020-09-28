@@ -2,28 +2,17 @@ package com.example.quizer.quizModel;
 
 import androidx.annotation.NonNull;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
-import com.j256.ormlite.table.DatabaseTable;
+import java.util.List;
 
-import java.util.Collection;
 
-@DatabaseTable(tableName = "Questions")
+
 public class Question {
-    @DatabaseField(columnName = "id", generatedId = true)
+
     private int id;
-    @DatabaseField(columnName = "text",unique = true)
     private String questionText;
-    @DatabaseField(foreign = true,columnName = "quiz")
     private Quiz quiz;
+    private List<Answer> answers;
 
-    @ForeignCollectionField(eager = true)
-    private Collection<Answer> answers;
-
-
-    public Question() {
-//For ORMLite
-    }
 
     public Question(String questionText, int rightAnswer, Quiz quiz) {
         this.questionText = questionText;
@@ -31,6 +20,22 @@ public class Question {
 
     }
 
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
 
     public String getQuestionText() {
         return questionText;
@@ -56,6 +61,9 @@ public class Question {
     }
 
     public int getRightAnswer() {
-        return  0;
+            for(int i=0;i<answers.size();i++){
+                if(answers.get(i).isCorrect()) return i;
+            }
+            return -1;
     }
 }

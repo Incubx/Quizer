@@ -21,7 +21,6 @@ public abstract class GenericQuizHolder extends RecyclerView.ViewHolder implemen
     protected TextView quizTitleText;
     protected TextView quizSizeText;
     protected ImageView quizSolvedImage;
-    protected Button aboutBtn;
     protected Quiz quiz;
 
 
@@ -42,9 +41,6 @@ public abstract class GenericQuizHolder extends RecyclerView.ViewHolder implemen
         quizSizeText = itemView.findViewById(R.id.quizSizeText);
         quizTitleText = itemView.findViewById(R.id.quizTitleText);
         quizSolvedImage = itemView.findViewById(R.id.quiz_solved);
-        aboutBtn = itemView.findViewById(R.id.about_btn);
-        aboutBtn.setVisibility(View.INVISIBLE);
-
     }
 
 }

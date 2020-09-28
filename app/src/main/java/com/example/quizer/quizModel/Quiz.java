@@ -9,27 +9,18 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-//TODO remove database
 
-
-@DatabaseTable(tableName = "Quizzes")
 public class Quiz implements Serializable {
-    @DatabaseField(columnName = "id", generatedId = true)
-    @SuppressWarnings("unused")
     private int id;
-    @DatabaseField(columnName = "title", unique = true)
     private String title;
-    @DatabaseField(columnName = "size")
     private int size;
-    @DatabaseField(columnName = "solved")
     private boolean solved;
-    @DatabaseField(columnName = "paid")
     private boolean paid;
-    @ForeignCollectionField(eager = true)
-    private Collection<Question> questions;
+    private List<Question> questions;
 
-    public Quiz(String title, int size, boolean solved, boolean paid, @NonNull Collection<Question> questions) {
+    public Quiz(String title, int size, boolean solved, boolean paid, @NonNull List<Question> questions) {
         this.title = title;
         this.size = size;
         this.solved = solved;
@@ -53,7 +44,7 @@ public class Quiz implements Serializable {
         return id;
     }
 
-    public Collection<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
@@ -78,13 +69,24 @@ public class Quiz implements Serializable {
         return title;
     }
 
-    public void addQuestion(Question question) {
-        question.setQuiz(this);
-        questions.add(question);
-    }
-
     public int getSize() {
         return size;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     @NonNull
