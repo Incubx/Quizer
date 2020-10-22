@@ -33,18 +33,6 @@ public class ResultDialogFragment extends DialogFragment {
         text.setText(results);
         final RatingBar ratingBar = v.findViewById(R.id.ratingBar);
         ratingBar.setStepSize(1);
-        Button shareBtn = v.findViewById(R.id.share_button);
-        shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, results);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Quizer!");
-                intent =Intent.createChooser(intent,"Quizer sends!");
-                startActivity(intent);
-            }
-        });
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.result_dialog_title)
@@ -59,9 +47,6 @@ public class ResultDialogFragment extends DialogFragment {
 
     }
 
-    private String getReport() {
-        return getString(R.string.share_text, "quiz!", 2);
-    }
 
     private void sendResult(int resultCode, int rating) {
         if (getTargetFragment() == null) {

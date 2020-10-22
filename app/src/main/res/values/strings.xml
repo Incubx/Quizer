@@ -42,4 +42,7 @@
     <string name="login_text">Log in page</string>
     <string name="login_btn">Log in</string>
     <string name="no_quizzes">There aren\'t any quizzes</string>
+    <string name="set_server_ip">Set server IP</string>
+    <string name="set_server_ip_string">Set server IP</string>
+    <string name="save">Save</string>
 </resources>

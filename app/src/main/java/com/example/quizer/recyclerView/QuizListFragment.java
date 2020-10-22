@@ -15,9 +15,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.quizer.quiz.QuizFragment;
+import com.example.quizer.quiz.ResultDialogFragment;
 import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.quiz.QuizActivity;
 import com.example.quizer.database.Repository;
@@ -72,11 +75,16 @@ public class QuizListFragment extends Fragment {
             case R.id.menu_item_about:
                 Toast.makeText(getActivity(), "This is about Toast!", Toast.LENGTH_LONG).show();
                 return true;
-            case R.id.menu_item_user_cabinet:
+           /* case R.id.menu_item_user_cabinet:
                 //this intent doesn't contain any user info, cause of 1 user in DataBase.
                 Intent intent = UserCabinetActivity.newIntent(getActivity());
                 startActivity(intent);
-                return true;
+                return true;*/
+            case R.id.set_server_btn:
+                FragmentManager fm = getParentFragmentManager();
+                ServerIpSetterDialog serverIpSetterDialog = ServerIpSetterDialog.newInstance();
+                serverIpSetterDialog.setTargetFragment(QuizListFragment.this,0);
+                serverIpSetterDialog.show(fm, "result_dialog");
             case R.id.update_quiz_btn:
                 updateUI();
                 return true;
