@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Quizer</string>
-    <string name="correct_text" translatable="false">Correct!</string>
-    <string name="incorrect_text" translatable="false">Incorrect!</string>
-    <string name="result">You have %d of %d correct answers!</string>
-    <string name="bad_result">You have no correct answers, try again!</string>
+    <string name="result">У вас %d из %d правильных ответов</string>
+    <string name="bad_result">Нет правильных ответов, попробуйте снова</string>
     <string name="buy_btn_text">Buy</string>
     <string name="title_activity_quiz_pager">QuizPagerActivity</string>
     <string name="share_text">Hey! I\'ve completed quiz "%s" with %d correct answers!</string>
@@ -22,15 +20,15 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="about_btn">About</string>
+    <string name="about_btn">О программе</string>
     <string name="starDescription">Star</string>
-    <string name="result_dialog_title">Results</string>
-    <string name="ok_btn">OK</string>
+    <string name="result_dialog_title">Результаты</string>
+    <string name="ok_btn">Ок</string>
     <string name="dialog_rating_question">How much do you like this test?</string>
-    <string name="about_menu_item">About</string>
+    <string name="about_menu_item">О программе</string>
     <string name="buy_notice">You should buy this quiz first</string>
     <string name="share_btn">Share</string>
-    <string name="user_cabinet_btn">User cabinet</string>
+    <string name="user_cabinet_btn">Личный кабинет</string>
     <string name="create_photo_btn">Create photo</string>
     <string name="rating_text">Rating: %d</string>
     <string name="registration_text">Registration Page</string>
@@ -43,6 +41,6 @@
     <string name="login_btn">Log in</string>
     <string name="no_quizzes">There aren\'t any quizzes</string>
     <string name="set_server_ip">Set server IP</string>
-    <string name="set_server_ip_string">Set server IP</string>
+    <string name="set_server_ip_string">Задать адрес сервера</string>
     <string name="save">Save</string>
 </resources>

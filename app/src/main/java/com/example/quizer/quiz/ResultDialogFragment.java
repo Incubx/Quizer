@@ -11,8 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.quizer.R;
@@ -31,8 +29,7 @@ public class ResultDialogFragment extends DialogFragment {
         TextView text = v.findViewById(R.id.result_text);
         final String results = getArguments().getString(RESULTS_TEXT);
         text.setText(results);
-        final RatingBar ratingBar = v.findViewById(R.id.ratingBar);
-        ratingBar.setStepSize(1);
+
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.result_dialog_title)
@@ -40,22 +37,19 @@ public class ResultDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        int rating = (int) ratingBar.getRating();
-                        sendResult(Activity.RESULT_OK, rating);
+                        okBtnPressed();
                     }
                 }).create();
 
     }
 
-
-    private void sendResult(int resultCode, int rating) {
+    private void okBtnPressed() {
         if (getTargetFragment() == null) {
             return;
         }
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_RATING, rating);
         getTargetFragment()
-                .onActivityResult(getTargetRequestCode(), resultCode, intent);
+                .onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
     }
 
     public static ResultDialogFragment newInstance(String message) {

@@ -27,8 +27,7 @@ public abstract class GenericQuizHolder extends RecyclerView.ViewHolder implemen
     public void bind(Quiz quiz) {
         this.quiz = quiz;
         int quizSize = quiz.getSize();
-        //TODO Change to resource!
-        String sizeText = quizSize > 1 ? quizSize + " questions" : quizSize + " question";
+        String sizeText = "Количество вопросов: "+quizSize;
         quizSizeText.setText(sizeText);
         quizTitleText.setText(quiz.getTitle());
 

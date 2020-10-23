@@ -19,13 +19,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.quizer.quiz.QuizFragment;
-import com.example.quizer.quiz.ResultDialogFragment;
 import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.quiz.QuizActivity;
 import com.example.quizer.database.Repository;
 import com.example.quizer.R;
-import com.example.quizer.userCabinet.UserCabinetActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +70,7 @@ public class QuizListFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_about:
-                Toast.makeText(getActivity(), "This is about Toast!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Тут будет справка о программе", Toast.LENGTH_LONG).show();
                 return true;
            /* case R.id.menu_item_user_cabinet:
                 //this intent doesn't contain any user info, cause of 1 user in DataBase.
@@ -112,7 +109,7 @@ public class QuizListFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<List<Quiz>> call, @NonNull Throwable t) {
-                Toast.makeText(getActivity(), "Error getting QuizList", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Ошибка получения тестов", Toast.LENGTH_LONG).show();
                 if (adapter == null) {
                     adapter = new QuizAdapter(new ArrayList<Quiz>());
                     recyclerView.setAdapter(adapter);
