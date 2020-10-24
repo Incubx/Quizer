@@ -10,7 +10,7 @@ import com.example.quizer.SingleFragmentActivity;
 
 
 public class QuizActivity extends SingleFragmentActivity {
-    private static String INTENT_EXTRA_QUIZ = "INTENT_EXTRA_ID";
+    private static final String INTENT_EXTRA_QUIZ = "INTENT_EXTRA_ID";
 
 
     @Override

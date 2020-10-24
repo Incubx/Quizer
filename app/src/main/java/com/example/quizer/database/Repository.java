@@ -21,7 +21,7 @@ public class Repository {
     private static final String SERVER_PREF = "SERVER_IP";
     private static Repository repository;
     private static Context context;
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
     private static String serverIP = "http://127.0.0.1:8080/";
     private UserDAO userDAO;
 
