@@ -17,15 +17,16 @@
     <string name="user_cabinet_btn">Личный кабинет</string>
     <string name="create_photo_btn">Create photo</string>
     <string name="rating_text">Rating: %d</string>
-    <string name="registration_text">Registration Page</string>
+    <string name="registration_text">Регистрация</string>
     <string name="nickname_def_text">NickName</string>
     <string name="email_def_text">Email</string>
     <string name="password_def_text">Password</string>
-    <string name="register_btn">Register</string>
+    <string name="register_btn">Зарегистрироваться</string>
     <string name="update_quizList_btn">Update quiz list</string>
-    <string name="login_text">Log in page</string>
-    <string name="login_btn">Log in</string>
+    <string name="login_text">Авторизация</string>
+    <string name="login_btn">Авторизоваться</string>
     <string name="set_server_ip">Set server IP</string>
     <string name="set_server_ip_string">Задать адрес сервера</string>
     <string name="save">Save</string>
+    <string name="server_addres">Адрес сервера</string>
 </resources>

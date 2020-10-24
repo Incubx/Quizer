@@ -25,7 +25,7 @@ public class ServerIpSetterDialog extends DialogFragment {
 
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_set_server_ip, null);
         final EditText text = v.findViewById(R.id.server_ip_edit_text);
-        final SharedPreferences preferences = getActivity().getSharedPreferences("SERVER_IP", 0);
+        final SharedPreferences preferences = getActivity().getSharedPreferences(SERVER_PREF, 0);
         String server_ip = preferences.getString(SERVER_PREF, "");
         text.setText(server_ip);
         return new AlertDialog.Builder(getActivity())
@@ -34,11 +34,7 @@ public class ServerIpSetterDialog extends DialogFragment {
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences.Editor editor = preferences.edit();
-                        String newServerIp = text.getText().toString();
-                        editor.putString(SERVER_PREF, newServerIp);
-                        editor.apply();
-                        Repository.setServerIP(newServerIp);
+                        Repository.getInstance(getActivity()).setServerIP(text.getText().toString());
                     }
                 }).create();
 
