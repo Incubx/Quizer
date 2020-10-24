@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.quizer.R;
 
-public class LogInFragment extends Fragment {
+public class AuthorizationFragment extends Fragment {
 
     private EditText passwordText;
     private EditText emailText;
@@ -59,7 +59,7 @@ public class LogInFragment extends Fragment {
         }
         emailText.setNextFocusDownId(R.id.email_edit_text);
 
-        LogInFragment.EditTextListener listener = new LogInFragment.EditTextListener();
+        AuthorizationFragment.EditTextListener listener = new AuthorizationFragment.EditTextListener();
         passwordText.addTextChangedListener(listener);
         emailText.addTextChangedListener(listener);
 

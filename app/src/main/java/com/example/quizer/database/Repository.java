@@ -23,32 +23,26 @@ public class Repository {
     private static Context context;
     private final Retrofit retrofit;
     private static String serverIP = "http://127.0.0.1:8080/";
-    private UserDAO userDAO;
 
     public static Repository getInstance(Context context) {
         if (repository == null) {
-            try {
-                final SharedPreferences preferences = context.getSharedPreferences("SERVER_IP", 0);
-                String ip = preferences.getString(SERVER_PREF, "");
-                assert ip != null;
-                if (ip.isEmpty()) {
-                    SharedPreferences.Editor editor = preferences.edit();
-                    String newServerIp = "127.0.0.1";
-                    editor.putString(SERVER_PREF, newServerIp);
-                    editor.apply();
-                }
-                else {
-                    serverIP = "http://"+ip+":8080/";
-                }
-                repository = new Repository(context);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            final SharedPreferences preferences = context.getSharedPreferences("SERVER_IP", 0);
+            String ip = preferences.getString(SERVER_PREF, "");
+            assert ip != null;
+            if (ip.isEmpty()) {
+                SharedPreferences.Editor editor = preferences.edit();
+                String newServerIp = "127.0.0.1";
+                editor.putString(SERVER_PREF, newServerIp);
+                editor.apply();
+            } else {
+                serverIP = "http://" + ip + ":8080/";
             }
+            repository = new Repository(context);
         }
         return repository;
     }
 
-    private Repository(Context context) throws SQLException {
+    private Repository(Context context) {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -67,13 +61,8 @@ public class Repository {
                 .build();
 
         Repository.context = context.getApplicationContext();
-        DatabaseHelper helper = new DatabaseHelper(context);
-        userDAO = helper.getUserDAO();
     }
 
-    public User getUser() throws SQLException {
-        return userDAO.getUser();
-    }
 
     public UserAPI getUserAPI() {
         return retrofit.create(UserAPI.class);
@@ -84,7 +73,6 @@ public class Repository {
         return retrofit.create(QuizAPI.class);
     }
 
-
     public File getPhotoFile(User user) {
         String filename = user.getPhotoFileName();
         File fileDir = context.getFilesDir();
@@ -93,11 +81,7 @@ public class Repository {
 
     public static void setServerIP(String serverIP) {
         Repository.serverIP = "http://" + serverIP + ":8080/";
-        try {
-            repository = new Repository(context);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        repository = new Repository(context);
 
 
     }
