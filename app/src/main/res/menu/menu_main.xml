@@ -11,7 +11,6 @@
         android:title="@string/update_quizList_btn"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menu_item_user_cabinet"
         android:icon="@drawable/user_cabinet_icon"
         android:title="@string/user_cabinet_btn"
         android:visible="false"

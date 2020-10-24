@@ -9,12 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.quizer.R;
+import com.example.quizer.database.Repository;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AuthorizationFragment extends Fragment {
 
@@ -39,7 +45,7 @@ public class AuthorizationFragment extends Fragment {
             if (isFieldFilled(passwordText) &&
                     isFieldFilled(emailText)) {
                 loginBtn.setEnabled(true);
-            }
+            }else  loginBtn.setEnabled(false);
         }
 
         private boolean isFieldFilled(EditText editText) {
@@ -51,7 +57,7 @@ public class AuthorizationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_registration, container, false);
+        View v = inflater.inflate(R.layout.fragment_authorization, container, false);
         passwordText = v.findViewById(R.id.password_edit_text);
         emailText = v.findViewById(R.id.email_edit_text);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -69,15 +75,34 @@ public class AuthorizationFragment extends Fragment {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendForm();
+                User user = new User(emailText.getText().toString(),passwordText.getText().toString());
+                Repository.getInstance(getActivity()).getUserAPI().authorizeUser(user).enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        switch (response.body()) {
+                            case 100:
+                                //TODO Переход в список тестов и сохранение юзера в префы
+                                Toast.makeText(getActivity(), "Авторизован", Toast.LENGTH_LONG).show();
+                                break;
+                            case 102:
+                                //TODO Очистика поля пароль
+                                Toast.makeText(getActivity(), "Неверный пароль", Toast.LENGTH_LONG).show();
+                                break;
+                            case 103:
+                                //TODO Переход на страницу регистрации с подставлением указанного emaila.
+                                Toast.makeText(getActivity(), "Не зарегестрирован", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+
+                    }
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) {
+
+                    }
+                });
             }
         });
         return v;
-    }
-
-
-    private void sendForm() {
-
     }
 
 }

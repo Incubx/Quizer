@@ -3,31 +3,17 @@
     <string name="result">У вас %d из %d правильных ответов</string>
     <string name="bad_result">Нет правильных ответов, попробуйте снова</string>
     <string name="buy_btn_text">Buy</string>
-    <string name="title_activity_quiz_pager">QuizPagerActivity</string>
-    <string name="share_text">Hey! I\'ve completed quiz "%s" with %d correct answers!</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="about_btn">О программе</string>
     <string name="starDescription">Star</string>
     <string name="result_dialog_title">Результаты</string>
     <string name="ok_btn">Ок</string>
-    <string name="dialog_rating_question">How much do you like this test?</string>
     <string name="about_menu_item">О программе</string>
     <string name="buy_notice">You should buy this quiz first</string>
-    <string name="share_btn">Share</string>
     <string name="user_cabinet_btn">Личный кабинет</string>
     <string name="create_photo_btn">Create photo</string>
     <string name="rating_text">Rating: %d</string>
@@ -39,7 +25,6 @@
     <string name="update_quizList_btn">Update quiz list</string>
     <string name="login_text">Log in page</string>
     <string name="login_btn">Log in</string>
-    <string name="no_quizzes">There aren\'t any quizzes</string>
     <string name="set_server_ip">Set server IP</string>
     <string name="set_server_ip_string">Задать адрес сервера</string>
     <string name="save">Save</string>

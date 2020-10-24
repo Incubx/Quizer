@@ -9,8 +9,6 @@ import com.google.gson.GsonBuilder;
 
 import java.io.File;
 
-import java.sql.SQLException;
-
 import okhttp3.OkHttpClient;
 
 import okhttp3.logging.HttpLoggingInterceptor;

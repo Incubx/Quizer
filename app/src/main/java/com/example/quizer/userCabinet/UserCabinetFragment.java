@@ -29,7 +29,6 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.quizer.R;
-import com.example.quizer.database.Repository;
 
 
 import java.io.File;

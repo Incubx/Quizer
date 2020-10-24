@@ -1,6 +1,5 @@
 package com.example.quizer.userCabinet;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,17 +19,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.quizer.R;
 import com.example.quizer.database.Repository;
-import com.example.quizer.recyclerView.ListFragmentActivity;
 
-
-import java.sql.SQLException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-@SuppressWarnings("ConstantConditions")
 public class RegistrationFragment extends Fragment {
 
     private EditText nicknameText;
@@ -52,14 +47,14 @@ public class RegistrationFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (isFieldFilled(nicknameText) &&
-                    isFieldFilled(passwordText) &&
-                    isFieldFilled(emailText)) {
+            if (isFilled(nicknameText) &&
+                    isFilled(passwordText) &&
+                    isFilled(emailText)) {
                 registerBtn.setEnabled(true);
-            }
+            } else registerBtn.setEnabled(false);
         }
 
-        private boolean isFieldFilled(EditText editText) {
+        private boolean isFilled(EditText editText) {
             return !editText.getText().toString().isEmpty();
         }
     }
@@ -92,20 +87,30 @@ public class RegistrationFragment extends Fragment {
                 Repository.getInstance(getActivity()).getUserAPI().registerUser(user).enqueue(new Callback<Integer>() {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        switch (response.body()) {
+                            case 100:
+                                //TODO Переход в список тестов и сохранение юзера в префы
+                                Toast.makeText(getActivity(), "ЗАРЕГЕСТРИРОВАН", Toast.LENGTH_LONG).show();
+                                break;
+                            case 101:
+                                //TODO Переход на страницу авторизации с подставлением указанного emaila.
+                                Toast.makeText(getActivity(), "Уже зарегестрирован", Toast.LENGTH_LONG).show();
+                                break;
+                        }
 
                     }
-
                     @Override
                     public void onFailure(Call<Integer> call, Throwable t) {
 
                     }
                 });
-            }});
+            }
+        });
 
         return v;
     }
 
-    private User getUserFromForm(){
+    private User getUserFromForm() {
         return new User(nicknameText.getText().toString(),
                 emailText.getText().toString(),
                 passwordText.getText().toString());
