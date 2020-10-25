@@ -29,4 +29,9 @@
     <string name="set_server_ip_string">Задать адрес сервера</string>
     <string name="save">Save</string>
     <string name="server_addres">Адрес сервера</string>
+    <string name="registration_tab">Регистрация</string>
+    <string name="authorization_tab">Авторизация</string>
+    <string name="title_activity_starter_acrivity">StarterAcrivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>
