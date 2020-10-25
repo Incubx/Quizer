@@ -3,13 +3,9 @@ package com.example.quizer.database;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.quizer.userCabinet.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
-
-import java.sql.SQLException;
 
 import okhttp3.OkHttpClient;
 
@@ -23,11 +19,9 @@ public class Repository {
     private static Context context;
     private final Retrofit retrofit;
     private static String serverIP = "http://127.0.0.1:8080/";
-    private UserDAO userDAO;
 
     public static Repository getInstance(Context context) {
         if (repository == null) {
-            try {
                 final SharedPreferences preferences = context.getSharedPreferences("SERVER_IP", 0);
                 String ip = preferences.getString(SERVER_PREF, "");
                 assert ip != null;
@@ -41,14 +35,11 @@ public class Repository {
                     serverIP = "http://"+ip+":8080/";
                 }
                 repository = new Repository(context);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return repository;
     }
 
-    private Repository(Context context) throws SQLException {
+    private Repository(Context context)  {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -67,16 +58,6 @@ public class Repository {
                 .build();
 
         Repository.context = context.getApplicationContext();
-        DatabaseHelper helper = new DatabaseHelper(context);
-        userDAO = helper.getUserDAO();
-    }
-
-    public User getUser() throws SQLException {
-        return userDAO.getUser();
-    }
-
-    public UserAPI getUserAPI() {
-        return retrofit.create(UserAPI.class);
     }
 
 
@@ -85,20 +66,8 @@ public class Repository {
     }
 
 
-    public File getPhotoFile(User user) {
-        String filename = user.getPhotoFileName();
-        File fileDir = context.getFilesDir();
-        return new File(fileDir, filename);
-    }
-
     public static void setServerIP(String serverIP) {
         Repository.serverIP = "http://" + serverIP + ":8080/";
-        try {
             repository = new Repository(context);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
     }
 }

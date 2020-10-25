@@ -14,7 +14,7 @@ public class Question {
     private List<Answer> answers;
 
 
-    public Question(String questionText, int rightAnswer, Quiz quiz) {
+    public Question(String questionText, Quiz quiz) {
         this.questionText = questionText;
         this.quiz = quiz;
 

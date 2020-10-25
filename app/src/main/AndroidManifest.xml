@@ -4,7 +4,7 @@
     package="com.example.quizer">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,19 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".MainActivity">
-        </activity>
         <activity android:name=".recyclerView.ListFragmentActivity">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".quiz.QuizActivity"
             android:parentActivityName=".recyclerView.ListFragmentActivity" />
-        <activity android:name=".userCabinet.UserCabinetActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
