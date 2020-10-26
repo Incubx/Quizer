@@ -1,4 +1,4 @@
-package com.example.quizer.database;
+package com.example.quizer.rest;
 
 import com.example.quizer.quizModel.Quiz;
 

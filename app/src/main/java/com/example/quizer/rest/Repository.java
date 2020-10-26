@@ -1,4 +1,4 @@
-package com.example.quizer.database;
+package com.example.quizer.rest;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,24 +22,23 @@ public class Repository {
 
     public static Repository getInstance(Context context) {
         if (repository == null) {
-                final SharedPreferences preferences = context.getSharedPreferences("SERVER_IP", 0);
-                String ip = preferences.getString(SERVER_PREF, "");
-                assert ip != null;
-                if (ip.isEmpty()) {
-                    SharedPreferences.Editor editor = preferences.edit();
-                    String newServerIp = "127.0.0.1";
-                    editor.putString(SERVER_PREF, newServerIp);
-                    editor.apply();
-                }
-                else {
-                    serverIP = "http://"+ip+":8080/";
-                }
-                repository = new Repository(context);
+            final SharedPreferences preferences = context.getSharedPreferences("SERVER_IP", 0);
+            String ip = preferences.getString(SERVER_PREF, "");
+            assert ip != null;
+            if (ip.isEmpty()) {
+                SharedPreferences.Editor editor = preferences.edit();
+                String newServerIp = "127.0.0.1";
+                editor.putString(SERVER_PREF, newServerIp);
+                editor.apply();
+            } else {
+                serverIP = "http://" + ip + ":8080/";
+            }
+            repository = new Repository(context);
         }
         return repository;
     }
 
-    private Repository(Context context)  {
+    private Repository(Context context) {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -68,6 +67,6 @@ public class Repository {
 
     public static void setServerIP(String serverIP) {
         Repository.serverIP = "http://" + serverIP + ":8080/";
-            repository = new Repository(context);
+        repository = new Repository(context);
     }
 }

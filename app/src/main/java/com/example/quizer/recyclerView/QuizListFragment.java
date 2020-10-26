@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.quiz.QuizActivity;
-import com.example.quizer.database.Repository;
+import com.example.quizer.rest.Repository;
 import com.example.quizer.R;
 
 import java.util.ArrayList;

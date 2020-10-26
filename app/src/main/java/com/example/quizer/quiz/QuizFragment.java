@@ -19,7 +19,7 @@ import com.example.quizer.R;
 import com.example.quizer.quizModel.Answer;
 import com.example.quizer.quizModel.Question;
 import com.example.quizer.quizModel.Quiz;
-import com.example.quizer.database.Repository;
+import com.example.quizer.rest.Repository;
 import com.example.quizer.recyclerView.ListFragmentActivity;
 
 import java.util.ArrayList;

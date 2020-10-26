@@ -13,8 +13,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.quizer.R;
-import com.example.quizer.database.Repository;
+import com.example.quizer.rest.Repository;
 
+@SuppressWarnings("ConstantConditions")
 public class ServerIpSetterDialog extends DialogFragment {
 
     private final String SERVER_PREF = "SERVER_IP";

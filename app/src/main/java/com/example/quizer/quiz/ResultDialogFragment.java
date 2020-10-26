@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.quizer.R;
 
+@SuppressWarnings("ConstantConditions")
 public class ResultDialogFragment extends DialogFragment {
     private static final String RESULTS_TEXT = "RESULTS_TEXT";
 
