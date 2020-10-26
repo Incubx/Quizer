@@ -8,7 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -72,15 +72,10 @@ public class QuizListFragment extends Fragment {
             case R.id.menu_item_about:
                 Toast.makeText(getActivity(), "Тут будет справка о программе", Toast.LENGTH_LONG).show();
                 return true;
-           /* case R.id.menu_item_user_cabinet:
-                //this intent doesn't contain any user info, cause of 1 user in DataBase.
-                Intent intent = UserCabinetActivity.newIntent(getActivity());
-                startActivity(intent);
-                return true;*/
             case R.id.set_server_btn:
                 FragmentManager fm = getParentFragmentManager();
                 ServerIpSetterDialog serverIpSetterDialog = ServerIpSetterDialog.newInstance();
-                serverIpSetterDialog.setTargetFragment(QuizListFragment.this,0);
+                serverIpSetterDialog.setTargetFragment(QuizListFragment.this, 0);
                 serverIpSetterDialog.show(fm, "result_dialog");
             case R.id.update_quiz_btn:
                 updateUI();
@@ -119,38 +114,27 @@ public class QuizListFragment extends Fragment {
 
     }
 
-    private class QuizHolderPaid extends GenericQuizHolder {
+    private class QuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView quizTitleText;
+        private TextView quizSizeText;
+        private Quiz quiz;
 
-        public QuizHolderPaid(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_quiz_not_free, parent, false));
-            itemView.setOnClickListener(this);
-            findViews();
-            Button buyBtn = itemView.findViewById(R.id.buy_button);
-            buyBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    quiz.setPaid(true);
-                    Toast.makeText(getActivity(), "Thanks for buying this quiz!", Toast.LENGTH_LONG).show();
-                    updateUI();
-                }
-            });
-        }
-
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(getActivity(), R.string.buy_notice, Toast.LENGTH_LONG).show();
-            /*Intent intent = QuizActivity.newIntent(getActivity(), quiz.getTitle());
-            startActivity(intent);*/
-        }
-    }
-
-    private class QuizHolderFree extends GenericQuizHolder {
-
-
-        public QuizHolderFree(LayoutInflater inflater, ViewGroup parent) {
+        public QuizHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_quiz, parent, false));
             itemView.setOnClickListener(this);
-            findViews();
+            quizSizeText = itemView.findViewById(R.id.quizSizeText);
+            quizTitleText = itemView.findViewById(R.id.quizTitleText);
+        }
+
+        public void bind(Quiz quiz) {
+            this.quiz = quiz;
+            int quizSize = quiz.getSize();
+            String sizeText = "Количество вопросов: " + quizSize;
+            quizSizeText.setText(sizeText);
+            quizTitleText.setText(quiz.getTitle());
+            if (quiz.getSize() == 0) {
+                itemView.setEnabled(false);
+            }
         }
 
         @Override
@@ -158,13 +142,12 @@ public class QuizListFragment extends Fragment {
             Intent intent = QuizActivity.newIntent(getActivity(), quiz.getId());
             startActivity(intent);
         }
+
     }
 
 
-    private class QuizAdapter extends RecyclerView.Adapter<GenericQuizHolder> {
+    private class QuizAdapter extends RecyclerView.Adapter<QuizHolder> {
 
-        private final int FREE_QUIZ = 0;
-        private final int NOT_FREE_QUIZ = 1;
         private List<Quiz> quizList;
 
         public QuizAdapter(List<Quiz> quizList) {
@@ -173,33 +156,19 @@ public class QuizListFragment extends Fragment {
 
         @NonNull
         @Override
-        public GenericQuizHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public QuizHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            switch (viewType) {
-                case FREE_QUIZ:
-                    return new QuizHolderFree(layoutInflater, parent);
-                case NOT_FREE_QUIZ:
-                    return new QuizHolderPaid(layoutInflater, parent);
-            }
-            return new QuizHolderPaid(layoutInflater, parent);
+            return new QuizHolder(layoutInflater, parent);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull GenericQuizHolder holder, int position) {
+        public void onBindViewHolder(@NonNull QuizHolder holder, int position) {
             holder.bind(quizList.get(position));
         }
 
         @Override
         public int getItemCount() {
             return quizList.size();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-
-            if (quizList.get(position).isPaid())
-                return NOT_FREE_QUIZ;
-            else return FREE_QUIZ;
         }
 
         public void setQuizList(List<Quiz> quizList) {
