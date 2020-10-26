@@ -132,15 +132,17 @@ public class QuizListFragment extends Fragment {
             String sizeText = "Количество вопросов: " + quizSize;
             quizSizeText.setText(sizeText);
             quizTitleText.setText(quiz.getTitle());
-            if (quiz.getSize() == 0) {
-                itemView.setEnabled(false);
-            }
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = QuizActivity.newIntent(getActivity(), quiz.getId());
-            startActivity(intent);
+            if (quiz.getSize() == 0) {
+                Toast.makeText(getActivity(),"В тесте пока нет вопросов",Toast.LENGTH_LONG).show();
+            }
+            else {
+                Intent intent = QuizActivity.newIntent(getActivity(), quiz.getId());
+                startActivity(intent);
+            }
         }
 
     }
