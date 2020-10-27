@@ -1,7 +1,6 @@
 package com.example.quizer.recyclerView;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import androidx.fragment.app.DialogFragment;
 import com.example.quizer.R;
 import com.example.quizer.rest.Repository;
 
-@SuppressWarnings("ConstantConditions")
 public class ServerIpSetterDialog extends DialogFragment {
 
     private final String SERVER_PREF = "SERVER_IP";
@@ -32,15 +30,12 @@ public class ServerIpSetterDialog extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.set_server_ip_string)
-                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences.Editor editor = preferences.edit();
-                        String newServerIp = text.getText().toString();
-                        editor.putString(SERVER_PREF, newServerIp);
-                        editor.apply();
-                        Repository.setServerIP(newServerIp);
-                    }
+                .setPositiveButton(R.string.save, (dialogInterface, i) -> {
+                    SharedPreferences.Editor editor = preferences.edit();
+                    String newServerIp = text.getText().toString();
+                    editor.putString(SERVER_PREF, newServerIp);
+                    editor.apply();
+                    Repository.setServerIP(newServerIp);
                 }).create();
 
     }

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".recyclerView.ListFragmentActivity">
+        <activity android:name=".recyclerView.ListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".quiz.QuizActivity"
-            android:parentActivityName=".recyclerView.ListFragmentActivity" />
+            android:parentActivityName=".recyclerView.ListActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

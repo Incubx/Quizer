@@ -6,10 +6,6 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
-import okhttp3.OkHttpClient;
-
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,7 +14,8 @@ public class Repository {
     private static Repository repository;
     private static Context context;
     private final Retrofit retrofit;
-    private static String serverIP = "http://127.0.0.1:8080/";
+    private static String serverIP = "http://192.168.9.10:8080/";
+
 
     public static Repository getInstance(Context context) {
         if (repository == null) {
@@ -40,12 +37,6 @@ public class Repository {
 
     private Repository(Context context) {
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor);
-
-
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setLenient();
         Gson gson = gsonBuilder.create();
@@ -53,7 +44,6 @@ public class Repository {
         retrofit = new Retrofit.Builder()
                 .baseUrl(serverIP)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(client.build())
                 .build();
 
         Repository.context = context.getApplicationContext();

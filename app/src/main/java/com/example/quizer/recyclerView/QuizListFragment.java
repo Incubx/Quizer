@@ -1,5 +1,6 @@
 package com.example.quizer.recyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,17 +40,11 @@ public class QuizListFragment extends Fragment {
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Nullable
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quiz_list, container, false);
         recyclerView = v.findViewById(R.id.quizRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        setHasOptionsMenu(true);
         updateUI();
         return v;
     }
@@ -66,6 +61,7 @@ public class QuizListFragment extends Fragment {
         inflater.inflate(R.menu.menu_main, menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -106,17 +102,20 @@ public class QuizListFragment extends Fragment {
             public void onFailure(@NonNull Call<List<Quiz>> call, @NonNull Throwable t) {
                 Toast.makeText(getActivity(), "Ошибка получения тестов", Toast.LENGTH_LONG).show();
                 if (adapter == null) {
-                    adapter = new QuizAdapter(new ArrayList<Quiz>());
+                    adapter = new QuizAdapter(new ArrayList<>());
                     recyclerView.setAdapter(adapter);
+                }
+                else {
+                    adapter.setQuizList(new ArrayList<>());
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
-
     }
 
     private class QuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView quizTitleText;
-        private TextView quizSizeText;
+        private final TextView quizTitleText;
+        private final TextView quizSizeText;
         private Quiz quiz;
 
         public QuizHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -146,7 +145,6 @@ public class QuizListFragment extends Fragment {
         }
 
     }
-
 
     private class QuizAdapter extends RecyclerView.Adapter<QuizHolder> {
 

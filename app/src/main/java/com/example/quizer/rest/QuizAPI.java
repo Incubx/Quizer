@@ -10,7 +10,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Path;
 
 public interface QuizAPI {
-
+    @Headers("Content-Type: application/json")
     @GET("/rest/quiz/")
     Call<List<Quiz>> getQuizList();
 

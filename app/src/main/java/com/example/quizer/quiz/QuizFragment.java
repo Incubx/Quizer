@@ -1,6 +1,5 @@
 package com.example.quizer.quiz;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ import com.example.quizer.quizModel.Answer;
 import com.example.quizer.quizModel.Question;
 import com.example.quizer.quizModel.Quiz;
 import com.example.quizer.rest.Repository;
-import com.example.quizer.recyclerView.ListFragmentActivity;
+import com.example.quizer.recyclerView.ListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@SuppressWarnings("ConstantConditions")
+
 public class QuizFragment extends Fragment implements View.OnClickListener {
 
     private final String CORRECT_ANSWERS_KEY = "correct_answers";
@@ -42,7 +41,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     private List<Button> btnList;
     int questionIndex;
     Quiz quiz;
-    List<Question> currentQuestions;
+    List<Question> currentQuestionList;
     Question currentQuestion;
 
     private int correctAnswers;
@@ -60,7 +59,6 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        //set View for fragment and get views by id.
         View v = inflater.inflate(R.layout.fragment_main_quiz, container, false);
         questionTextView = v.findViewById(R.id.questionText);
         btnList = new ArrayList<>();
@@ -81,18 +79,19 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
 
         //Get Quiz title from fragment's arguments.
         if (getArguments() != null) {
-            int quizId = getArguments().getInt(ID_ARG);
+            final int quizId = getArguments().getInt(ID_ARG);
             Repository.getInstance(getActivity()).getQuizAPI().getQuizById(quizId).enqueue(new Callback<Quiz>() {
                 @Override
                 public void onResponse(@NonNull Call<Quiz> call, @NonNull Response<Quiz> response) {
                     quiz = response.body();
-                    currentQuestions = quiz.getQuestions();
+                    currentQuestionList = quiz.getQuestions();
+                    getActivity().setTitle(quiz.getTitle());
                     setCurrentQuestion();
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Quiz> call, @NonNull Throwable t) {
-                    Toast.makeText(getActivity(), "Error getting quiz" + t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Ошибка получения текста " + t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -111,28 +110,18 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if (resultCode != Activity.RESULT_OK) return;
-
-        if (requestCode == REQUEST_RATING) {
-            int rating = data.getIntExtra(ResultDialogFragment.EXTRA_RATING, 0);
-            if (rating > 0) {
-                Toast.makeText(getActivity(), "Thanks for your " + rating + " stars!", Toast.LENGTH_LONG).show();
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Intent intent = new Intent(getActivity(), ListFragmentActivity.class);
+        Intent intent = new Intent(getActivity(), ListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         getActivity().finish();
     }
 
     private void setCurrentQuestion() {
-        currentQuestion = currentQuestions.get(questionIndex);
+        currentQuestion = currentQuestionList.get(questionIndex);
         //Получаем ответы и устанавливаем текст на кнопках
         questionTextView.setText(currentQuestion.getQuestionText());
         List<Answer> answers = currentQuestion.getAnswers();
-        System.out.println(answers);
+
         for (int i = 0; i < answers.size(); i++) {
             if (answers.get(i).getAnswerText().equals("")) {
                 btnList.get(i).setVisibility(View.INVISIBLE);
@@ -147,12 +136,12 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         Button btn = (Button) view;
         int answer = btnList.indexOf(btn);
-        System.out.println(correctAnswers);
+
         if (answer == currentQuestion.getRightAnswer()) {
             correctAnswers++;
         }
         questionIndex++;
-        if (questionIndex >= currentQuestions.size()) {
+        if (questionIndex == currentQuestionList.size()) {
             finishQuiz();
         } else
             setCurrentQuestion();
