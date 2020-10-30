@@ -1,15 +1,13 @@
 <resources>
     <string name="app_name" translatable="false">Quizer</string>
-    <string name="result">У вас %d из %d правильных ответов</string>
+    <string name="result">Правильных ответов:\n%d из %d</string>
     <string name="bad_result">Нет правильных ответов, попробуйте снова</string>
-    <string name="buy_btn_text">Buy</string>
 
     <!-- Preference Titles -->
 
     <!-- Messages Preferences -->
 
     <!-- Sync Preferences -->
-    <string name="starDescription">Star</string>
     <string name="result_dialog_title">Результаты</string>
     <string name="ok_btn">Ок</string>
     <string name="about_menu_item">О программе</string>
@@ -23,9 +21,9 @@
     <string name="password_def_text">Password</string>
     <string name="register_btn">Зарегистрироваться</string>
     <string name="update_quizList_btn">Update quiz list</string>
+    <string name="set_server_ip">Изменить IP адрес сервера</string>
     <string name="login_text">Авторизация</string>
     <string name="login_btn">Авторизоваться</string>
-    <string name="set_server_ip">Set server IP</string>
     <string name="set_server_ip_string">Задать адрес сервера</string>
     <string name="save">Save</string>
     <string name="server_addres">Адрес сервера</string>

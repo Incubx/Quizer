@@ -1,4 +1,4 @@
-package com.example.quizer.database;
+package com.example.quizer.rest;
 
 import com.example.quizer.quizModel.Quiz;
 
@@ -10,7 +10,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Path;
 
 public interface QuizAPI {
-
+    @Headers("Content-Type: application/json")
     @GET("/rest/quiz/")
     Call<List<Quiz>> getQuizList();
 

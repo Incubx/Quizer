@@ -6,7 +6,6 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,13 +32,7 @@ public class ResultDialogFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.result_dialog_title)
-                .setPositiveButton(R.string.ok_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        okBtnPressed();
-                    }
-                }).create();
+                .setPositiveButton(R.string.ok_btn, (dialogInterface, i) -> okBtnPressed()).create();
 
     }
 

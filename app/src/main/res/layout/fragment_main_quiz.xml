@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_quiz_item"
     tools:context=".quiz.QuizActivity">
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,31 +23,38 @@
         <Button
             android:id="@+id/answerBtn1"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/buttons" />
 
         <Button
             android:id="@+id/answerBtn2"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttons" />
 
 
         <Button
             android:id="@+id/answerBtn3"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttons" />
 
         <Button
             android:id="@+id/answerBtn4"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttons" />
 
     </LinearLayout>
 
@@ -52,8 +62,10 @@
         android:id="@+id/questionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="128dp"
+        android:layout_marginTop="256dp"
+        android:layout_marginBottom="512dp"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
