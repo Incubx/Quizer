@@ -17,9 +17,6 @@ import com.example.quizer.R;
 public class ResultDialogFragment extends DialogFragment {
     private static final String RESULTS_TEXT = "RESULTS_TEXT";
 
-    public static final String EXTRA_RATING = "EXTRA_RATING";
-
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

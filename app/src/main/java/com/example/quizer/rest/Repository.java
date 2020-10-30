@@ -11,10 +11,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Repository {
     private static final String SERVER_PREF = "SERVER_IP";
+    private final String USER_ID_PREF = "USER_ID";
     private static Repository repository;
     private static Context context;
     private final Retrofit retrofit;
-    private static String serverIP = "http://192.168.9.10:8080/";
+    private static String serverIP = "http://127.0.0.1:8080/";
 
 
     public static Repository getInstance(Context context) {
@@ -49,14 +50,27 @@ public class Repository {
         Repository.context = context.getApplicationContext();
     }
 
+    public UserAPI getUserAPI() {
+        return retrofit.create(UserAPI.class);
+    }
 
     public QuizAPI getQuizAPI() {
         return retrofit.create(QuizAPI.class);
     }
 
-
-    public static void setServerIP(String serverIP) {
+    public void setServerIP(String serverIP) {
+        final SharedPreferences preferences = context.getSharedPreferences(SERVER_PREF, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(SERVER_PREF, serverIP);
+        editor.apply();
         Repository.serverIP = "http://" + serverIP + ":8080/";
         repository = new Repository(context);
+    }
+
+    public void saveUserId(int id){
+        SharedPreferences preferences = context.getSharedPreferences(USER_ID_PREF, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(USER_ID_PREF, id);
+        editor.apply();
     }
 }

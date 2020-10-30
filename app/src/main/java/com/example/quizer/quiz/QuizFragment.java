@@ -63,10 +63,10 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         questionTextView = v.findViewById(R.id.questionText);
         btnList = new ArrayList<>();
         //get buttons from Layout
-        btnList.add((Button) v.findViewById(R.id.answerBtn1));
-        btnList.add((Button) v.findViewById(R.id.answerBtn2));
-        btnList.add((Button) v.findViewById(R.id.answerBtn3));
-        btnList.add((Button) v.findViewById(R.id.answerBtn4));
+        btnList.add(v.findViewById(R.id.answerBtn1));
+        btnList.add(v.findViewById(R.id.answerBtn2));
+        btnList.add(v.findViewById(R.id.answerBtn3));
+        btnList.add(v.findViewById(R.id.answerBtn4));
         //set this fragment as onClickListener
         for (Button btn : btnList) {
             btn.setOnClickListener(this);

@@ -16,8 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.quizer.R;
-import com.example.quizer.database.Repository;
-import com.example.quizer.recyclerView.ListFragmentActivity;
+import com.example.quizer.recyclerView.ListActivity;
+import com.example.quizer.rest.Repository;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,10 +45,8 @@ public class AuthorizationFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (isFieldFilled(passwordText) &&
-                    isFieldFilled(emailText)) {
-                loginBtn.setEnabled(true);
-            } else loginBtn.setEnabled(false);
+            loginBtn.setEnabled(isFieldFilled(passwordText) &&
+                    isFieldFilled(emailText));
         }
 
         private boolean isFieldFilled(EditText editText) {
@@ -72,40 +70,37 @@ public class AuthorizationFragment extends Fragment {
         loginBtn = v.findViewById(R.id.login_btn);
         loginBtn.setEnabled(false);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                User user = new User(emailText.getText().toString(), passwordText.getText().toString());
-                Repository.getInstance(getActivity()).setServerIP(serverIPText.getText().toString());
-                Repository.getInstance(getActivity()).getUserAPI().authorizeUser(user).enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        switch (response.body()) {
-                            case -2:
-                                Toast.makeText(getActivity(), "Неверный пароль", Toast.LENGTH_LONG).show();
-                                passwordText.setText("");
-                                loginBtn.setEnabled(false);
-                                break;
-                            case -3:
-                                //TODO Переход на страницу регистрации с подставлением указанного emaila.
-                                Toast.makeText(getActivity(), "Не зарегестрирован", Toast.LENGTH_LONG).show();
-                                break;
-                            default:
-                                Repository.getInstance(getActivity()).saveUserId(response.body());
-                                Intent intent = new Intent(getActivity(), ListFragmentActivity.class);
-                                startActivity(intent);
-                                getActivity().finish();
-                                break;
-                        }
-
+        loginBtn.setOnClickListener(view -> {
+            User user = new User(emailText.getText().toString(), passwordText.getText().toString());
+            Repository.getInstance(getActivity()).setServerIP(serverIPText.getText().toString());
+            Repository.getInstance(getActivity()).getUserAPI().authorizeUser(user).enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    switch (response.body()) {
+                        case -2:
+                            Toast.makeText(getActivity(), "Неверный пароль", Toast.LENGTH_LONG).show();
+                            passwordText.setText("");
+                            loginBtn.setEnabled(false);
+                            break;
+                        case -3:
+                            //TODO Переход на страницу регистрации с подставлением указанного emaila.
+                            Toast.makeText(getActivity(), "Не зарегестрирован", Toast.LENGTH_LONG).show();
+                            break;
+                        default:
+                            Repository.getInstance(getActivity()).saveUserId(response.body());
+                            Intent intent = new Intent(getActivity(), ListActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                            break;
                     }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
-                        Toast.makeText(getActivity(), "Ошибка подключения к серверу", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+                }
+
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Ошибка подключения к серверу", Toast.LENGTH_LONG).show();
+                }
+            });
         });
         return v;
     }

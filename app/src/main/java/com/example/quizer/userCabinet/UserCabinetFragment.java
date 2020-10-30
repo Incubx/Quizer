@@ -1,3 +1,4 @@
+/*
 package com.example.quizer.userCabinet;
 
 import android.Manifest;
@@ -196,3 +197,4 @@ public class UserCabinetFragment extends Fragment {
     }
 
 }
+*/

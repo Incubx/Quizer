@@ -1,7 +1,6 @@
 package com.example.quizer.recyclerView;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.quizer.R;
-import com.example.quizer.database.Repository;
+import com.example.quizer.rest.Repository;
 
 public class ServerIpSetterDialog extends DialogFragment {
 
@@ -31,12 +30,7 @@ public class ServerIpSetterDialog extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.set_server_ip_string)
-                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Repository.getInstance(getActivity()).setServerIP(text.getText().toString());
-                    }
-                }).create();
+                .setPositiveButton(R.string.save, (dialogInterface, i) -> Repository.getInstance(getActivity()).setServerIP(text.getText().toString())).create();
 
     }
 
