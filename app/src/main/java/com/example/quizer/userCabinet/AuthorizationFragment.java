@@ -54,7 +54,6 @@ public class AuthorizationFragment extends Fragment {
         }
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,8 +82,10 @@ public class AuthorizationFragment extends Fragment {
                             loginBtn.setEnabled(false);
                             break;
                         case -3:
-                            //TODO Переход на страницу регистрации с подставлением указанного emaila.
                             Toast.makeText(getActivity(), "Не зарегестрирован", Toast.LENGTH_LONG).show();
+                            emailText.setText("");
+                            passwordText.setText("");
+                            loginBtn.setEnabled(false);
                             break;
                         default:
                             Repository.getInstance(getActivity()).saveUserId(response.body());

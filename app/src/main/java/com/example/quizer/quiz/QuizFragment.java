@@ -92,6 +92,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onFailure(@NonNull Call<Quiz> call, @NonNull Throwable t) {
                     Toast.makeText(getActivity(), "Ошибка получения текста " + t.getMessage(), Toast.LENGTH_LONG).show();
+                    getActivity().finish();
                 }
             });
 
@@ -149,11 +150,29 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     }
 
     private void finishQuiz() {
-        String finalText = setFinalText();
-        FragmentManager fm = getParentFragmentManager();
-        ResultDialogFragment resultAlert = ResultDialogFragment.newInstance(finalText);
-        resultAlert.setTargetFragment(QuizFragment.this, REQUEST_RATING);
-        resultAlert.show(fm, "result_dialog");
+        int userId = Repository.getInstance(getActivity()).getUserId();
+        int rating = (int) ((double) correctAnswers / quiz.getSize() * 100);
+        Repository.getInstance(getActivity())
+                .getUserAPI()
+                .finishQuiz(userId, quiz.getId(), rating)
+                .enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        Toast.makeText(getActivity(), response.body().toString(), Toast.LENGTH_LONG).show();
+                        String finalText = setFinalText();
+                        FragmentManager fm = getParentFragmentManager();
+                        ResultDialogFragment resultAlert = ResultDialogFragment.newInstance(finalText);
+                        resultAlert.setTargetFragment(QuizFragment.this, REQUEST_RATING);
+                        resultAlert.show(fm, "result_dialog");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Не удалось передать данные о прохождении", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
     }
 
     private String setFinalText() {

@@ -73,4 +73,9 @@ public class Repository {
         editor.putInt(USER_ID_PREF, id);
         editor.apply();
     }
+
+    public int getUserId(){
+        SharedPreferences preferences = context.getSharedPreferences(USER_ID_PREF, 0);
+        return  preferences.getInt(USER_ID_PREF,-1);
+    }
 }
