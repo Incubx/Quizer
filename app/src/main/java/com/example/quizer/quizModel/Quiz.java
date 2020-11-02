@@ -12,16 +12,20 @@ public class Quiz implements Serializable {
     private String title;
     private int size;
     private List<Question> questions;
+    private boolean isCompleted;
 
-    public Quiz(String title, int size, @NonNull List<Question> questions) {
+    public Quiz(String title, int size, @NonNull List<Question> questions, boolean isCompleted) {
         this.title = title;
         this.size = size;
         this.questions = questions;
+        this.isCompleted = isCompleted;
+
     }
 
-    public Quiz(String title, int size) {
+    public Quiz(String title, int size, boolean isCompleted) {
         this.title = title;
         this.size = size;
+       // this.isCompleted = isCompleted;
         questions = new ArrayList<>();
     }
 
@@ -50,6 +54,14 @@ public class Quiz implements Serializable {
         this.id = id;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -57,7 +69,7 @@ public class Quiz implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", size=" + size +
-                ", questions="+questions+
+                ", questions=" + questions +
                 '}';
     }
 

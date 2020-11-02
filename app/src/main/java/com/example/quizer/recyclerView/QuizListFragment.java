@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,9 @@ import com.example.quizer.rest.Repository;
 import com.example.quizer.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,11 +86,13 @@ public class QuizListFragment extends Fragment {
     }
 
     private void updateUI() {
+        int userId = Repository.getInstance(getActivity()).getUserId();
+        System.out.println(userId);
         Repository.getInstance(getActivity())
                 .getQuizAPI()
-                .getQuizList().enqueue(new Callback<List<Quiz>>() {
+                .getQuizList(userId).enqueue(new Callback<List<Quiz>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Quiz>> call, @NonNull Response<List<Quiz>> response) {
+            public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
                 List<Quiz> quizList = response.body();
                 if (adapter == null) {
                     adapter = new QuizAdapter(quizList);
@@ -99,23 +104,24 @@ public class QuizListFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Quiz>> call, @NonNull Throwable t) {
+            public void onFailure(Call<List<Quiz>> call, Throwable t) {
                 Toast.makeText(getActivity(), "Ошибка получения тестов", Toast.LENGTH_LONG).show();
                 if (adapter == null) {
                     adapter = new QuizAdapter(new ArrayList<>());
                     recyclerView.setAdapter(adapter);
-                }
-                else {
+                } else {
                     adapter.setQuizList(new ArrayList<>());
                     adapter.notifyDataSetChanged();
                 }
             }
+
         });
     }
 
     private class QuizHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView quizTitleText;
         private final TextView quizSizeText;
+        private final ImageView isCompleted;
         private Quiz quiz;
 
         public QuizHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -123,6 +129,8 @@ public class QuizListFragment extends Fragment {
             itemView.setOnClickListener(this);
             quizSizeText = itemView.findViewById(R.id.quizSizeText);
             quizTitleText = itemView.findViewById(R.id.quizTitleText);
+            isCompleted = itemView.findViewById(R.id.isCompletedStarView);
+
         }
 
         public void bind(Quiz quiz) {
@@ -131,14 +139,17 @@ public class QuizListFragment extends Fragment {
             String sizeText = "Количество вопросов: " + quizSize;
             quizSizeText.setText(sizeText);
             quizTitleText.setText(quiz.getTitle());
+            if(quiz.isCompleted()){
+                isCompleted.setVisibility(View.VISIBLE);
+            }
+            else isCompleted.setVisibility(View.INVISIBLE);
         }
 
         @Override
         public void onClick(View view) {
             if (quiz.getSize() == 0) {
-                Toast.makeText(getActivity(),"В тесте пока нет вопросов",Toast.LENGTH_LONG).show();
-            }
-            else {
+                Toast.makeText(getActivity(), "В тесте пока нет вопросов", Toast.LENGTH_LONG).show();
+            } else {
                 Intent intent = QuizActivity.newIntent(getActivity(), quiz.getId());
                 startActivity(intent);
             }
