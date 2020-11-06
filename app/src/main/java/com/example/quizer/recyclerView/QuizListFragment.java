@@ -1,6 +1,7 @@
 package com.example.quizer.recyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class QuizListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private QuizAdapter adapter;
+    private String category;
 
 
     @Override
@@ -45,6 +47,7 @@ public class QuizListFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         recyclerView = v.findViewById(R.id.RecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        category="No category";
         setHasOptionsMenu(true);
         updateUI();
         return v;
@@ -65,22 +68,38 @@ public class QuizListFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        FragmentManager fm = getParentFragmentManager();
         switch (item.getItemId()) {
             case R.id.menu_item_about:
                 Toast.makeText(getActivity(), "Тут будет справка о программе", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.set_server_btn:
-                FragmentManager fm = getParentFragmentManager();
                 ServerIpSetterDialog serverIpSetterDialog = ServerIpSetterDialog.newInstance();
                 serverIpSetterDialog.setTargetFragment(QuizListFragment.this, 0);
                 serverIpSetterDialog.show(fm, "result_dialog");
+                return true;
             case R.id.update_quiz_btn:
                 updateUI();
                 return true;
+            case R.id.categrories_btn:
+                ChooseCategoryDialog chooseCategoryDialog = ChooseCategoryDialog.newInstance();
+                chooseCategoryDialog.setTargetFragment(QuizListFragment.this, 1);
+                chooseCategoryDialog.show(fm, "result_dialog");
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == 1) {
+            this.category = (String) data.getSerializableExtra(ChooseCategoryDialog.EXTRA_CATEGORY);
+            updateUI();
+        }
     }
 
     private void updateUI() {
@@ -88,7 +107,7 @@ public class QuizListFragment extends Fragment {
         System.out.println(userId);
         Repository.getInstance(getActivity())
                 .getQuizAPI()
-                .getQuizList(userId).enqueue(new Callback<List<Quiz>>() {
+                .getQuizList(userId,category).enqueue(new Callback<List<Quiz>>() {
             @Override
             public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
                 List<Quiz> quizList = response.body();
@@ -137,10 +156,9 @@ public class QuizListFragment extends Fragment {
             String sizeText = "Количество вопросов: " + quizSize;
             quizSizeText.setText(sizeText);
             quizTitleText.setText(quiz.getTitle());
-            if(quiz.isCompleted()){
+            if (quiz.isCompleted()) {
                 isCompleted.setVisibility(View.VISIBLE);
-            }
-            else isCompleted.setVisibility(View.INVISIBLE);
+            } else isCompleted.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -158,6 +176,10 @@ public class QuizListFragment extends Fragment {
     private class QuizAdapter extends RecyclerView.Adapter<QuizHolder> {
 
         private List<Quiz> quizList;
+
+        public List<Quiz> getQuizList() {
+            return quizList;
+        }
 
         public QuizAdapter(List<Quiz> quizList) {
             this.quizList = quizList;

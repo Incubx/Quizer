@@ -7,11 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.quizer.SingleFragmentActivity;
-import com.example.quizer.quizModel.Answer;
 import com.example.quizer.quizModel.Quiz;
-import com.example.quizer.rest.Repository;
-
-import java.util.List;
 
 public class AnswersActivity extends SingleFragmentActivity {
     private static final String INTENT_EXTRA_QUIZ = "INTENT_EXTRA_QUIZ";

@@ -9,10 +9,10 @@ import com.example.quizer.userCabinet.AuthorizationFragment;
 
 
 public class MainActivity extends SingleFragmentActivity {
-    private final String USER_ID_PREF = "USER_ID";
 
     @Override
     public Fragment createFragment() {
+        String USER_ID_PREF = "USER_ID";
         SharedPreferences preferences = getSharedPreferences(USER_ID_PREF, 0);
         int userId = preferences.getInt(USER_ID_PREF,-1);
         if(userId==-1)

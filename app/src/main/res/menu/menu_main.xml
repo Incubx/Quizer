@@ -3,6 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/categrories_btn"
+        android:title="@string/choose_category" />
+    <item
         android:id="@+id/set_server_btn"
         android:title="@string/set_server_ip" />
     <item
