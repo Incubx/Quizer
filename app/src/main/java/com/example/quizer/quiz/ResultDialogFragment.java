@@ -29,8 +29,17 @@ public class ResultDialogFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.result_dialog_title)
-                .setPositiveButton(R.string.ok_btn, (dialogInterface, i) -> okBtnPressed()).create();
+                .setPositiveButton(R.string.checkAnswers, (dialogInterface, i) -> showAnswersBtnPressed())
+                .setNegativeButton(R.string.ok_btn,(dialogInterface, i) -> okBtnPressed()).create();
+    }
 
+    private void showAnswersBtnPressed() {
+        if (getTargetFragment() == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        getTargetFragment()
+                .onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
     }
 
     private void okBtnPressed() {
@@ -39,7 +48,7 @@ public class ResultDialogFragment extends DialogFragment {
         }
         Intent intent = new Intent();
         getTargetFragment()
-                .onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+                .onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, intent);
     }
 
     public static ResultDialogFragment newInstance(String message) {

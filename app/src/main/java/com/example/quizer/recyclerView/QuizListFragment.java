@@ -27,9 +27,7 @@ import com.example.quizer.rest.Repository;
 import com.example.quizer.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,8 +42,8 @@ public class QuizListFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_quiz_list, container, false);
-        recyclerView = v.findViewById(R.id.quizRecyclerView);
+        View v = inflater.inflate(R.layout.fragment_list, container, false);
+        recyclerView = v.findViewById(R.id.RecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         setHasOptionsMenu(true);
         updateUI();

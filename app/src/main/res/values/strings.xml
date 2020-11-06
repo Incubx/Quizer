@@ -26,10 +26,10 @@
     <string name="login_btn">Авторизоваться</string>
     <string name="set_server_ip_string">Задать адрес сервера</string>
     <string name="save">Save</string>
-    <string name="server_addres">Адрес сервера</string>
+    <string name="server_address">Адрес сервера</string>
     <string name="registration_tab">Регистрация</string>
     <string name="authorization_tab">Авторизация</string>
-    <string name="title_activity_starter_acrivity">StarterAcrivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="checkAnswers">Посмотреть ответы</string>
+    <string name="user_answer">Вы ответили:\n%s</string>
+    <string name="correct_answer">Верный ответ:\n%s</string>
 </resources>

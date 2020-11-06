@@ -3,8 +3,11 @@ package com.example.quizer.rest;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.quizer.quizModel.Answer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,6 +19,7 @@ public class Repository {
     private static Context context;
     private final Retrofit retrofit;
     private static String serverIP = "http://127.0.0.1:8080/";
+    private List<Answer> userAnswers;
 
 
     public static Repository getInstance(Context context) {
@@ -77,5 +81,13 @@ public class Repository {
     public int getUserId(){
         SharedPreferences preferences = context.getSharedPreferences(USER_ID_PREF, 0);
         return  preferences.getInt(USER_ID_PREF,-1);
+    }
+
+    public void setUserAnswers(List<Answer> userAnswers) {
+        this.userAnswers = userAnswers;
+    }
+
+    public List<Answer> getUserAnswers() {
+        return userAnswers;
     }
 }

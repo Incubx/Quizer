@@ -1,5 +1,6 @@
 package com.example.quizer.quiz;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,6 +46,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     Question currentQuestion;
 
     private int correctAnswers;
+    private final List<Answer> userAnswers = new ArrayList<>();
 
 
     public static QuizFragment newInstance(int id) {
@@ -77,7 +79,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
             correctAnswers = savedInstanceState.getInt(CORRECT_ANSWERS_KEY, 0);
         }
 
-        //Get Quiz title from fragment's arguments.
+        //Get Quiz id from fragment's arguments.
         if (getArguments() != null) {
             final int quizId = getArguments().getInt(ID_ARG);
             Repository.getInstance(getActivity()).getQuizAPI().getQuizById(quizId).enqueue(new Callback<Quiz>() {
@@ -111,9 +113,15 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        Intent intent = new Intent(getActivity(), ListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        if (resultCode == Activity.RESULT_CANCELED) {
+            Intent intent = new Intent(getActivity(), ListActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else {
+            Repository.getInstance(getActivity()).setUserAnswers(userAnswers);
+            Intent intent = AnswersActivity.newIntent(getActivity(), quiz);
+            startActivity(intent);
+        }
         getActivity().finish();
     }
 
@@ -137,6 +145,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         Button btn = (Button) view;
         int answer = btnList.indexOf(btn);
+        userAnswers.add(currentQuestion.getAnswers().get(answer));
 
         if (answer == currentQuestion.getRightAnswer()) {
             correctAnswers++;
@@ -150,6 +159,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     }
 
     private void finishQuiz() {
+        System.out.println(userAnswers);
         int userId = Repository.getInstance(getActivity()).getUserId();
         int rating = (int) ((double) correctAnswers / quiz.getSize() * 100);
         Repository.getInstance(getActivity())
@@ -158,7 +168,6 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
                 .enqueue(new Callback<Integer>() {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        Toast.makeText(getActivity(), response.body().toString(), Toast.LENGTH_LONG).show();
                         String finalText = setFinalText();
                         FragmentManager fm = getParentFragmentManager();
                         ResultDialogFragment resultAlert = ResultDialogFragment.newInstance(finalText);

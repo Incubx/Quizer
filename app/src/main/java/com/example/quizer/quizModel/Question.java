@@ -2,11 +2,12 @@ package com.example.quizer.quizModel;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.List;
 
 
 
-public class Question {
+public class Question implements Serializable {
 
     private int id;
     private String questionText;
@@ -65,5 +66,10 @@ public class Question {
                 if(answers.get(i).isCorrect()) return i;
             }
             return -1;
+    }
+
+    public String getRightAnswerText(){
+        int correctAnswer = getRightAnswer();
+        return answers.get(correctAnswer).getAnswerText();
     }
 }
