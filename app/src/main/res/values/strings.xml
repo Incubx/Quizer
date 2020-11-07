@@ -16,9 +16,9 @@
     <string name="create_photo_btn">Create photo</string>
     <string name="rating_text">Rating: %d</string>
     <string name="registration_text">Регистрация</string>
-    <string name="nickname_def_text">NickName</string>
+    <string name="nickname_def_text">Логин</string>
     <string name="email_def_text">Email</string>
-    <string name="password_def_text">Password</string>
+    <string name="password_def_text">Пароль</string>
     <string name="register_btn">Зарегистрироваться</string>
     <string name="update_quizList_btn">Update quiz list</string>
     <string name="set_server_ip">Изменить IP адрес сервера</string>
