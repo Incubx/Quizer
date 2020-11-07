@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent">
@@ -10,7 +9,7 @@
         android:id="@+id/registration_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/registration_text"
+        android:text="@string/login_text"
         android:textColor="#3A433D"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +20,6 @@
         app:layout_constraintVertical_bias="0.131" />
 
     <TableLayout
-        android:id="@+id/tableLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -36,24 +34,21 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="@string/nickname_def_text"
+                android:text="@string/server_address"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/nickname_edit_text"
-                android:layout_width="match_parent"
+                android:id="@+id/server_ip_edit_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:textColor="#3A433D"
-                android:theme="@style/MyEditTextTheme"/>
+                android:inputType="textPersonName" />
+
         </TableRow>
 
         <TableRow
@@ -61,12 +56,11 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="@string/email_def_text"
+                android:text="@string/nickname_def_text"
                 android:textAlignment="center"
                 android:textSize="18sp" />
 
@@ -78,7 +72,7 @@
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:textColor="#3A433D"
-                android:theme="@style/MyEditTextTheme"/>
+                android:theme="@style/MyEditTextTheme" />
 
         </TableRow>
 
@@ -87,7 +81,6 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -112,12 +105,12 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/register_btn"
+                android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
-                android:text="@string/register_btn"
+                android:text="@string/login_btn"
                 android:textColor="#3A433D" />
         </TableRow>
 

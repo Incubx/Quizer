@@ -10,19 +10,19 @@ import com.example.quizer.SingleFragmentActivity;
 
 
 public class QuizActivity extends SingleFragmentActivity {
-    private static String INTENT_EXTRA_QUIZ = "INTENT_EXTRA_TITLE";
+    private static final String INTENT_EXTRA_QUIZ = "INTENT_EXTRA_ID";
 
 
     @Override
     public Fragment createFragment() {
-        String quizTitle = getIntent().getStringExtra(INTENT_EXTRA_QUIZ);
-        return QuizFragment.newInstance(quizTitle);
+        int quizId = getIntent().getIntExtra(INTENT_EXTRA_QUIZ,-1);
+        return QuizFragment.newInstance(quizId);
     }
 
     @NonNull
-    public static Intent newIntent(Context context, String quizTitle) {
+    public static Intent newIntent(Context context, int id) {
         Intent intent = new Intent(context, QuizActivity.class);
-        intent.putExtra(INTENT_EXTRA_QUIZ, quizTitle);
+        intent.putExtra(INTENT_EXTRA_QUIZ, id);
         return intent;
     }
 

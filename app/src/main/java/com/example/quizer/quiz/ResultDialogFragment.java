@@ -6,22 +6,16 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.quizer.R;
 
 public class ResultDialogFragment extends DialogFragment {
     private static final String RESULTS_TEXT = "RESULTS_TEXT";
-
-    public static final String EXTRA_RATING = "EXTRA_RATING";
-
 
     @NonNull
     @Override
@@ -31,46 +25,30 @@ public class ResultDialogFragment extends DialogFragment {
         TextView text = v.findViewById(R.id.result_text);
         final String results = getArguments().getString(RESULTS_TEXT);
         text.setText(results);
-        final RatingBar ratingBar = v.findViewById(R.id.ratingBar);
-        ratingBar.setStepSize(1);
-        Button shareBtn = v.findViewById(R.id.share_button);
-        shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, results);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Quizer!");
-                intent =Intent.createChooser(intent,"Quizer sends!");
-                startActivity(intent);
-            }
-        });
+
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.result_dialog_title)
-                .setPositiveButton(R.string.ok_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        int rating = (int) ratingBar.getRating();
-                        sendResult(Activity.RESULT_OK, rating);
-                    }
-                }).create();
-
+                .setPositiveButton(R.string.checkAnswers, (dialogInterface, i) -> showAnswersBtnPressed())
+                .setNegativeButton(R.string.ok_btn,(dialogInterface, i) -> okBtnPressed()).create();
     }
 
-    private String getReport() {
-        return getString(R.string.share_text, "quiz!", 2);
-    }
-
-    private void sendResult(int resultCode, int rating) {
+    private void showAnswersBtnPressed() {
         if (getTargetFragment() == null) {
             return;
         }
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_RATING, rating);
         getTargetFragment()
-                .onActivityResult(getTargetRequestCode(), resultCode, intent);
+                .onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+    }
+
+    private void okBtnPressed() {
+        if (getTargetFragment() == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        getTargetFragment()
+                .onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, intent);
     }
 
     public static ResultDialogFragment newInstance(String message) {

@@ -1,3 +1,4 @@
+/*
 package com.example.quizer.userCabinet;
 
 import android.Manifest;
@@ -29,7 +30,6 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.quizer.R;
-import com.example.quizer.database.Repository;
 
 
 import java.io.File;
@@ -38,7 +38,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.SQLException;
 
 @SuppressWarnings("ConstantConditions")
 public class UserCabinetFragment extends Fragment {
@@ -56,16 +55,15 @@ public class UserCabinetFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_user_cabinet, container, false);
-        try {
             //setting user info fields.
-            User user = Repository.getInstance(getActivity()).getUser();
+            //User user = Repository.getInstance(getActivity()).getUser();
             TextView nicknameTextView = v.findViewById(R.id.nickname_text);
-            nicknameTextView.setText(user.getNickname());
+           // nicknameTextView.setText(user.getNickname());
             TextView ratingTextView = v.findViewById(R.id.rating_text);
-            String rating = getString(R.string.rating_text, user.getRating());
-            ratingTextView.setText(rating);
+            //String rating = getString(R.string.rating_text, user.getRating());
+           // ratingTextView.setText(rating);
             photoView = v.findViewById(R.id.user_photo_view);
-            photoFile = Repository.getInstance(getActivity()).getPhotoFile(user);
+            //photoFile = Repository.getInstance(getActivity()).getPhotoFile(user);
             if (photoFile.exists()) {
                 updateUserPhoto();
             }
@@ -84,10 +82,6 @@ public class UserCabinetFragment extends Fragment {
                 }
             });
 
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return v;
     }
 
@@ -203,3 +197,4 @@ public class UserCabinetFragment extends Fragment {
     }
 
 }
+*/

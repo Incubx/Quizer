@@ -2,31 +2,29 @@ package com.example.quizer.quizModel;
 
 import androidx.annotation.NonNull;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
+import java.io.Serializable;
 
-@DatabaseTable(tableName = "Answers")
-public class Answer {
-    @DatabaseField(columnName = "id", generatedId = true)
-    @SuppressWarnings("unused")
+
+public class Answer implements Serializable {
+
     private int id;
-    @DatabaseField(columnName = "text",unique = true)
     private String answerText;
 
-    @SuppressWarnings("unused")
+    private boolean correct;
+
+    private Question question;
+
     public Answer() {
     }
 
-    public Answer(String answerText) {
-        this.answerText = answerText;
+
+    public boolean isCorrect() {
+        return correct;
     }
+
 
     public String getAnswerText() {
         return answerText;
-    }
-
-    public void setAnswerText(String answerText) {
-        this.answerText = answerText;
     }
 
     @NonNull
