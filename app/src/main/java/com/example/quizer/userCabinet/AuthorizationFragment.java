@@ -1,6 +1,7 @@
 package com.example.quizer.userCabinet;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,7 +27,7 @@ import retrofit2.Response;
 public class AuthorizationFragment extends Fragment {
 
     private EditText passwordText;
-    private EditText emailText;
+    private EditText loginText;
     private EditText serverIPText;
     private Button loginBtn;
 
@@ -46,7 +47,7 @@ public class AuthorizationFragment extends Fragment {
         @Override
         public void afterTextChanged(Editable editable) {
             loginBtn.setEnabled(isFieldFilled(passwordText) &&
-                    isFieldFilled(emailText));
+                    isFieldFilled(loginText));
         }
 
         private boolean isFieldFilled(EditText editText) {
@@ -59,31 +60,35 @@ public class AuthorizationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_authorization, container, false);
         passwordText = v.findViewById(R.id.password_edit_text);
-        emailText = v.findViewById(R.id.email_edit_text);
+        loginText = v.findViewById(R.id.nickname_edit_text);
         serverIPText = v.findViewById(R.id.server_ip_edit_text);
 
-        AuthorizationFragment.EditTextListener listener = new AuthorizationFragment.EditTextListener();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            serverIPText.setFocusedByDefault(false);
+        }
+
+        EditTextListener listener = new EditTextListener();
         passwordText.addTextChangedListener(listener);
-        emailText.addTextChangedListener(listener);
+        loginText.addTextChangedListener(listener);
 
         loginBtn = v.findViewById(R.id.login_btn);
         loginBtn.setEnabled(false);
 
         loginBtn.setOnClickListener(view -> {
-            User user = new User(emailText.getText().toString(), passwordText.getText().toString());
+            User user = new User(loginText.getText().toString(), passwordText.getText().toString());
             Repository.getInstance(getActivity()).setServerIP(serverIPText.getText().toString());
             Repository.getInstance(getActivity()).getUserAPI().authorizeUser(user).enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                     switch (response.body()) {
-                        case -2:
+                        case -402:
                             Toast.makeText(getActivity(), "Неверный пароль", Toast.LENGTH_LONG).show();
                             passwordText.setText("");
                             loginBtn.setEnabled(false);
                             break;
-                        case -3:
+                        case -403:
                             Toast.makeText(getActivity(), "Не зарегестрирован", Toast.LENGTH_LONG).show();
-                            emailText.setText("");
+                            loginText.setText("");
                             passwordText.setText("");
                             loginBtn.setEnabled(false);
                             break;
