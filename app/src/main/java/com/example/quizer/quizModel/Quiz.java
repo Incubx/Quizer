@@ -13,7 +13,6 @@ public class Quiz implements Serializable {
     private int size;
     private List<Question> questions;
     private boolean isCompleted;
-    private Category category;
 
     public Quiz(String title, int size, @NonNull List<Question> questions, boolean isCompleted) {
         this.title = title;
@@ -57,11 +56,6 @@ public class Quiz implements Serializable {
     public boolean isCompleted() {
         return isCompleted;
     }
-
-    public Category getCategory() {
-        return category;
-    }
-
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;

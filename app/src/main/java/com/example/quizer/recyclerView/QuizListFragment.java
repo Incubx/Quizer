@@ -100,6 +100,7 @@ public class QuizListFragment extends Fragment {
             this.category = (String) data.getSerializableExtra(ChooseCategoryDialog.EXTRA_CATEGORY);
             updateUI();
         }
+
     }
 
     private void updateUI() {
@@ -176,10 +177,6 @@ public class QuizListFragment extends Fragment {
     private class QuizAdapter extends RecyclerView.Adapter<QuizHolder> {
 
         private List<Quiz> quizList;
-
-        public List<Quiz> getQuizList() {
-            return quizList;
-        }
 
         public QuizAdapter(List<Quiz> quizList) {
             this.quizList = quizList;
