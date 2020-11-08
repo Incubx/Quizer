@@ -1,6 +1,7 @@
 package com.example.quizer.userCabinet;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -59,10 +60,14 @@ public class AuthorizationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_authorization, container, false);
         passwordText = v.findViewById(R.id.password_edit_text);
-        loginText = v.findViewById(R.id.email_edit_text);
+        loginText = v.findViewById(R.id.nickname_edit_text);
         serverIPText = v.findViewById(R.id.server_ip_edit_text);
 
-        AuthorizationFragment.EditTextListener listener = new AuthorizationFragment.EditTextListener();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            serverIPText.setFocusedByDefault(false);
+        }
+
+        EditTextListener listener = new EditTextListener();
         passwordText.addTextChangedListener(listener);
         loginText.addTextChangedListener(listener);
 
