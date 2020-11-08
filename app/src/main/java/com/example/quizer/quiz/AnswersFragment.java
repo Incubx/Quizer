@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +41,7 @@ public class AnswersFragment extends Fragment {
 
         List<Answer> userAnswers = Repository.getInstance(getActivity()).getUserAnswers();
         Quiz quiz = (Quiz) getArguments().getSerializable(QUIZ_ARG);
+        getActivity().setTitle(quiz.getTitle());
 
         AnswersAdapter adapter = new AnswersAdapter(quiz.getQuestions(), userAnswers);
         recyclerView.setAdapter(adapter);
@@ -51,22 +53,35 @@ public class AnswersFragment extends Fragment {
         private final TextView questionText;
         private final TextView userAnswerText;
         private final TextView correctAnswerText;
+        private final ConstraintLayout layout;
 
         public AnswersHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_answers, parent, false));
             questionText = itemView.findViewById(R.id.question_text);
             userAnswerText = itemView.findViewById(R.id.user_answer_text);
             correctAnswerText = itemView.findViewById(R.id.correct_answer_text);
+            layout = itemView.findViewById(R.id.list_item_answer);
         }
 
         public void bind(Question question, Answer answer) {
             questionText.setText(question.getQuestionText());
+            String userAnswerString = answer.getAnswerText();
             String userAnswer = getResources()
-                    .getString(R.string.user_answer, answer.getAnswerText());
+                    .getString(R.string.user_answer, userAnswerString);
             userAnswerText.setText(userAnswer);
+            String correctAnswerString = question.getRightAnswerText();
             String correctAnswer = getResources()
-                    .getString(R.string.correct_answer, question.getRightAnswerText());
+                    .getString(R.string.correct_answer, correctAnswerString);
             correctAnswerText.setText(correctAnswer);
+            correctAnswerText.setBackground(getResources().getDrawable(R.drawable.correct_answer));
+            if (userAnswerString.equals(correctAnswerString)) {
+                layout.setBackgroundColor(getResources().getColor(R.color.correct_answer));
+                userAnswerText.setBackground(getResources().getDrawable(R.drawable.correct_user_answer));
+            } else {
+                layout.setBackgroundColor(getResources().getColor(R.color.incorrect_answer));
+                userAnswerText.setBackground(getResources().getDrawable(R.drawable.incorrect_answer));
+
+            }
         }
 
 
