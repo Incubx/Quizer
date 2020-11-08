@@ -35,8 +35,10 @@ public class AnswersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_list, container, false);
-        RecyclerView recyclerView = v.findViewById(R.id.RecyclerView);
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        View view = v.findViewById(R.id.category_list);
+        view.setVisibility(View.GONE);
 
         List<Answer> userAnswers = Repository.getInstance(getActivity()).getUserAnswers();
         Quiz quiz = (Quiz) getArguments().getSerializable(QUIZ_ARG);
