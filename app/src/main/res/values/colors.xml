@@ -7,4 +7,11 @@
     <color name="main_background">#ADC7CA</color>
 
     <color name="black">#000000</color>
+    <color name="edit_text_activated">#696666</color>
+    <color name="correct_answer">#79BCA8</color>
+    <color name="correct_user_answer">#9BDAB1</color>
+    <color name="incorrect_answer">#EFAEA7</color>
+    <color name="incorrect_user_answer">#C3FD8175</color>
+    <color name="answer">#FEFFFF</color>
+
 </resources>
