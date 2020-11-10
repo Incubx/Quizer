@@ -53,7 +53,7 @@ public class QuizListFragment extends Fragment {
         recyclerView = v.findViewById(R.id.recyclerView);
         categoryListSpinner = v.findViewById(R.id.category_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        category="No category";
+        category = "No category";
         setCategoryList();
 
         categoryListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -84,15 +84,23 @@ public class QuizListFragment extends Fragment {
                 for (Category category : categoryList) {
                     categoriesNameList.add(category.getName());
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                           getActivity(), android.R.layout.simple_spinner_item, categoriesNameList);
+                            getActivity(), android.R.layout.simple_spinner_item, categoriesNameList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     categoryListSpinner.setAdapter(adapter);
+
+                }
+                for (int i = 0; i < categoriesNameList.size(); i++) {
+                    String categoryName = categoriesNameList.get(i);
+                    if (QuizListFragment.this.category.equals(categoryName)) {
+                        categoryListSpinner.setSelection(i);
+                        break;
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast.makeText(getActivity(),"Не удалось получить список категорий",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Не удалось получить список категорий", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -124,6 +132,7 @@ public class QuizListFragment extends Fragment {
                 serverIpSetterDialog.show(fm, "result_dialog");
                 return true;
             case R.id.update_quiz_btn:
+                setCategoryList();
                 updateUI();
                 return true;
             default:
@@ -134,10 +143,11 @@ public class QuizListFragment extends Fragment {
 
     private void updateUI() {
         int userId = Repository.getInstance(getActivity()).getUserId();
+        //
 
         Repository.getInstance(getActivity())
                 .getQuizAPI()
-                .getQuizList(userId,category).enqueue(new Callback<List<Quiz>>() {
+                .getQuizList(userId, category).enqueue(new Callback<List<Quiz>>() {
             @Override
             public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
                 List<Quiz> quizList = response.body();
