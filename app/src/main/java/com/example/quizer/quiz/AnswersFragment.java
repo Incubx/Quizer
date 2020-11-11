@@ -111,7 +111,7 @@ public class AnswersFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return questionList.size();
+            return userAnswers.size();
         }
 
     }

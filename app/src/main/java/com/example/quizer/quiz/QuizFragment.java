@@ -3,6 +3,7 @@ package com.example.quizer.quiz;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,9 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
 
     private TextView questionTextView;
     private List<Button> btnList;
+    private TextView timerView;
+    private CountDownTimer timer;
+
     int questionIndex;
     Quiz quiz;
     List<Question> currentQuestionList;
@@ -62,6 +66,8 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_main_quiz, container, false);
+
+        timerView = v.findViewById(R.id.timerView);
         questionTextView = v.findViewById(R.id.questionText);
         btnList = new ArrayList<>();
         //get buttons from Layout
@@ -89,6 +95,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
                     currentQuestionList = quiz.getQuestions();
                     getActivity().setTitle(quiz.getTitle());
                     setCurrentQuestion();
+                    startTimer();
                 }
 
                 @Override
@@ -100,6 +107,24 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
 
         }
         return v;
+    }
+
+    private void startTimer() {
+        timer = new CountDownTimer(10000, 1000) {
+            @Override
+            public void onTick(long l) {
+                int minutes = (int) l / 1000 / 60;
+                int seconds = (int) (l / 1000 - minutes * 60);
+                timerView.setText(String.format(getResources().getString(R.string.timer_text), minutes, seconds));
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(getActivity(), "TIME IS OVER", Toast.LENGTH_LONG).show();
+                finishQuiz();
+            }
+        };
+        timer.start();
     }
 
     @Override
@@ -156,6 +181,12 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         } else
             setCurrentQuestion();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
     }
 
     private void finishQuiz() {

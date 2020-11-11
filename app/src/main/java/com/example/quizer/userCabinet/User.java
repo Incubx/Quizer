@@ -7,10 +7,6 @@ public class User {
 
     private String password;
 
-    private int rating;
-
-    private String photoFileName;
-
 
 
     public User() {
@@ -19,8 +15,6 @@ public class User {
     public User(String nickname,String password) {
         this.nickname = nickname;
         this.password= password;
-        this.rating=0;
-        this.photoFileName = "User_photo_"+nickname+".jpg";
     }
 
     public String getNickname() {
