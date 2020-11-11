@@ -110,7 +110,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     }
 
     private void startTimer() {
-        timer = new CountDownTimer(10000, 1000) {
+        timer = new CountDownTimer(120000, 1000) {
             @Override
             public void onTick(long l) {
                 int minutes = (int) l / 1000 / 60;
