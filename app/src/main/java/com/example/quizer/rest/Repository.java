@@ -62,6 +62,10 @@ public class Repository {
         return retrofit.create(QuizAPI.class);
     }
 
+    public CategoryAPI getCategoryAPI() {
+        return retrofit.create(CategoryAPI.class);
+    }
+
     public void setServerIP(String serverIP) {
         final SharedPreferences preferences = context.getSharedPreferences(SERVER_PREF, 0);
         SharedPreferences.Editor editor = preferences.edit();

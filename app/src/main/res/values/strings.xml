@@ -11,15 +11,8 @@
     <string name="result_dialog_title">Результаты</string>
     <string name="ok_btn">Ок</string>
     <string name="about_menu_item">О программе</string>
-    <string name="buy_notice">You should buy this quiz first</string>
-    <string name="user_cabinet_btn">Личный кабинет</string>
-    <string name="create_photo_btn">Create photo</string>
-    <string name="rating_text">Rating: %d</string>
-    <string name="registration_text">Регистрация</string>
     <string name="nickname_def_text">Логин</string>
-    <string name="email_def_text">Email</string>
     <string name="password_def_text">Пароль</string>
-    <string name="register_btn">Зарегистрироваться</string>
     <string name="update_quizList_btn">Update quiz list</string>
     <string name="set_server_ip">Изменить IP адрес сервера</string>
     <string name="login_text">Авторизация</string>
@@ -27,9 +20,8 @@
     <string name="set_server_ip_string">Задать адрес сервера</string>
     <string name="save">Save</string>
     <string name="server_address">Адрес сервера</string>
-    <string name="registration_tab">Регистрация</string>
-    <string name="authorization_tab">Авторизация</string>
     <string name="checkAnswers">Посмотреть ответы</string>
     <string name="user_answer">Вы ответили:\n%s</string>
     <string name="correct_answer">Верный ответ:\n%s</string>
+    <string name="timer_text">Осталось времени: %02d:%02d</string>
 </resources>

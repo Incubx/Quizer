@@ -13,6 +13,7 @@ public class Quiz implements Serializable {
     private int size;
     private List<Question> questions;
     private boolean isCompleted;
+    private int timerTime;
 
     public Quiz(String title, int size, @NonNull List<Question> questions, boolean isCompleted) {
         this.title = title;
@@ -22,10 +23,9 @@ public class Quiz implements Serializable {
 
     }
 
-    public Quiz(String title, int size, boolean isCompleted) {
+    public Quiz(String title, int size) {
         this.title = title;
         this.size = size;
-       // this.isCompleted = isCompleted;
         questions = new ArrayList<>();
     }
 
@@ -41,6 +41,13 @@ public class Quiz implements Serializable {
         return questions;
     }
 
+    public int getTimerTime() {
+        return timerTime;
+    }
+
+    public void setTimerTime(int timerTime) {
+        this.timerTime = timerTime;
+    }
 
     public String getTitle() {
         return title;

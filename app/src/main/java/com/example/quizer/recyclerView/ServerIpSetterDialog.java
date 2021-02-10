@@ -16,14 +16,13 @@ import com.example.quizer.rest.Repository;
 
 public class ServerIpSetterDialog extends DialogFragment {
 
-    private final String SERVER_PREF = "SERVER_IP";
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_set_server_ip, null);
         final EditText text = v.findViewById(R.id.server_ip_edit_text);
+        String SERVER_PREF = "SERVER_IP";
         final SharedPreferences preferences = getActivity().getSharedPreferences(SERVER_PREF, 0);
         String server_ip = preferences.getString(SERVER_PREF, "");
         text.setText(server_ip);
